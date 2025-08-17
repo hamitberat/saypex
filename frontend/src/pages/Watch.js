@@ -190,7 +190,7 @@ const Watch = ({ sidebarOpen }) => {
           </div>
 
           {/* Comments */}
-          <CommentSection videoId={videoId} comments={mockComments} />
+          <CommentSection videoId={videoId} />
         </div>
 
         {/* Sidebar - Recommended Videos */}

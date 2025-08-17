@@ -20,12 +20,23 @@ const Home = ({ sidebarOpen }) => {
   ];
 
   useEffect(() => {
-    // Simulate API call
+    // Load videos from API
     const loadVideos = async () => {
       setLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
-      setVideos(mockVideos);
-      setLoading(false);
+      try {
+        const params = {};
+        if (selectedCategory !== 'All') {
+          params.category = selectedCategory.toLowerCase();
+        }
+        
+        const videosData = await videoApi.getVideos(params);
+        setVideos(videosData);
+      } catch (error) {
+        console.error('Error loading videos:', handleApiError(error));
+        setVideos([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadVideos();

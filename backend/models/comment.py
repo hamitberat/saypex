@@ -151,5 +151,5 @@ class CommentTreeResponse(BaseModel):
 
 class CommentModerationRequest(BaseModel):
     """Request model for comment moderation actions"""
-    action: str = Field(..., regex=r'^(approve|hide|delete|pin|unpin|heart|unheart)$')
+    action: str = Field(..., pattern=r'^(approve|hide|delete|pin|unpin|heart|unheart)$')
     reason: Optional[str] = Field(None, max_length=500)

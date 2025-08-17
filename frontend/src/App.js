@@ -1,53 +1,94 @@
-import { useEffect } from "react";
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Home from './pages/Home';
+import Watch from './pages/Watch';
+import SearchResults from './pages/SearchResults';
+import Trending from './pages/Trending';
+import { Toaster } from './components/ui/sonner';
+import './App.css';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      if (mobile) {
+        setSidebarOpen(false);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleMenuClick = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  const handleOverlayClick = () => {
+    if (isMobile && sidebarOpen) {
+      setSidebarOpen(false);
     }
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+    <BrowserRouter>
+      <div className="min-h-screen bg-white">
+        <Header 
+          onMenuClick={handleMenuClick}
+          onSearch={handleSearch}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
+        
+        <Sidebar 
+          isOpen={sidebarOpen} 
+          isMobile={isMobile}
+        />
+        
+        {/* Mobile overlay */}
+        {isMobile && sidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+            onClick={handleOverlayClick}
+          />
+        )}
 
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+        <main className="min-h-screen">
+          <Routes>
+            <Route path="/" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/watch" element={<Watch sidebarOpen={sidebarOpen} />} />
+            <Route path="/results" element={<SearchResults sidebarOpen={sidebarOpen} />} />
+            <Route path="/trending" element={<Trending sidebarOpen={sidebarOpen} />} />
+            <Route path="/explore" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/shorts" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/subscriptions" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/history" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/liked" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/music" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/gaming" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/sports" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/movies" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/learning" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/fashion" element={<Home sidebarOpen={sidebarOpen} />} />
+            <Route path="/channel/:channelName" element={<Home sidebarOpen={sidebarOpen} />} />
+          </Routes>
+        </main>
+
+        <Toaster />
+      </div>
+    </BrowserRouter>
   );
 }
 

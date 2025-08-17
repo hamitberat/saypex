@@ -51,7 +51,7 @@ class UserStats(BaseModel):
 class User(BaseDocument):
     """User document model"""
     # Basic information
-    username: str = Field(..., min_length=3, max_length=30, regex=r'^[a-zA-Z0-9_]+$')
+    username: str = Field(..., min_length=3, max_length=30, pattern=r'^[a-zA-Z0-9_]+$')
     email: EmailStr
     full_name: Optional[str] = Field(None, max_length=100)
     avatar_url: Optional[str] = None

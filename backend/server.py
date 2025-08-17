@@ -1,67 +1,18 @@
 from fastapi import FastAPI, APIRouter
-from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
-import os
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 import logging
+import os
 from pathlib import Path
-from pydantic import BaseModel, Field
-from typing import List
-import uuid
-from datetime import datetime
 
+# Import core components
+from .core.database import init_database, close_database
+from .core.cache import init_cache, close_cache
 
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
-
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
-
-# Create the main app without a prefix
-app = FastAPI()
-
-# Create a router with the /api prefix
-api_router = APIRouter(prefix="/api")
-
-
-# Define Models
-class StatusCheck(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
-
-class StatusCheckCreate(BaseModel):
-    client_name: str
-
-# Add your routes to the router instead of directly to app
-@api_router.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.dict()
-    status_obj = StatusCheck(**status_dict)
-    _ = await db.status_checks.insert_one(status_obj.dict())
-    return status_obj
-
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    status_checks = await db.status_checks.find().to_list(1000)
-    return [StatusCheck(**status_check) for status_check in status_checks]
-
-# Include the router in the main app
-app.include_router(api_router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Import API routers
+from .api.videos import router as videos_router
+from .api.users import router as users_router  
+from .api.comments import router as comments_router
 
 # Configure logging
 logging.basicConfig(
@@ -70,6 +21,106 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Manage application startup and shutdown"""
+    # Startup
+    logger.info("Starting YouTube Clone API Server...")
+    
+    try:
+        # Initialize database connection
+        await init_database()
+        logger.info("Database initialized successfully")
+        
+        # Initialize cache connection
+        await init_cache()
+        logger.info("Cache initialized successfully")
+        
+        logger.info("✅ YouTube Clone API Server started successfully")
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to start server: {e}")
+        raise
+    
+    yield
+    
+    # Shutdown
+    logger.info("Shutting down YouTube Clone API Server...")
+    
+    try:
+        await close_cache()
+        await close_database()
+        logger.info("✅ Server shutdown completed")
+        
+    except Exception as e:
+        logger.error(f"❌ Error during shutdown: {e}")
+
+
+# Create FastAPI app with lifespan management
+app = FastAPI(
+    title="YouTube Clone API",
+    description="Enterprise-grade YouTube clone with ML recommendations",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# Create API router with /api prefix
+api_router = APIRouter(prefix="/api")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_origins=["*"],  # Configure appropriately for production
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Health check endpoint
+@api_router.get("/")
+async def root():
+    """Health check endpoint"""
+    return {
+        "message": "YouTube Clone API is running",
+        "status": "healthy",
+        "version": "1.0.0"
+    }
+
+@api_router.get("/health")
+async def health_check():
+    """Detailed health check endpoint"""
+    return {
+        "status": "healthy",
+        "service": "youtube-clone-api",
+        "version": "1.0.0",
+        "environment": os.environ.get("ENVIRONMENT", "development")
+    }
+
+# Include API routers
+api_router.include_router(videos_router)
+api_router.include_router(users_router)
+api_router.include_router(comments_router)
+
+# Include the API router in the main app
+app.include_router(api_router)
+
+# Error handlers
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    """Global exception handler"""
+    logger.error(f"Unhandled exception: {exc}", exc_info=True)
+    return {
+        "error": "Internal server error",
+        "message": "An unexpected error occurred"
+    }
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        "server:app",
+        host="0.0.0.0",
+        port=8001,
+        reload=True,
+        log_level="info"
+    )

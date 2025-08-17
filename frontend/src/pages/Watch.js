@@ -19,14 +19,25 @@ const Watch = ({ sidebarOpen }) => {
   const [recommendedVideos, setRecommendedVideos] = useState([]);
 
   useEffect(() => {
-    if (videoId) {
-      const foundVideo = mockVideos.find(v => v.id === videoId);
-      setVideo(foundVideo);
-      
-      // Get recommended videos (excluding current video)
-      const recommended = mockVideos.filter(v => v.id !== videoId).slice(0, 8);
-      setRecommendedVideos(recommended);
-    }
+    const loadVideoData = async () => {
+      if (videoId) {
+        try {
+          // Get video details
+          const videoData = await videoApi.getVideo(videoId);
+          setVideo(videoData);
+          
+          // Get recommended videos
+          const recommendedData = await videoApi.getRecommendations(videoId, { limit: 8 });
+          setRecommendedVideos(recommendedData);
+        } catch (error) {
+          console.error('Error loading video data:', handleApiError(error));
+          setVideo(null);
+          setRecommendedVideos([]);
+        }
+      }
+    };
+
+    loadVideoData();
   }, [videoId]);
 
   const handleLike = () => {

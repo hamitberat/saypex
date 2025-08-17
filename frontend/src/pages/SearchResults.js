@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import VideoCard from '../components/VideoCard';
 import { Button } from '../components/ui/button';
 import { Filter, Search } from 'lucide-react';
-import { mockSearchResults } from '../mock/mockData';
+import { videoApi, handleApiError } from '../services/api';
 
 const SearchResults = ({ sidebarOpen }) => {
   const [searchParams] = useSearchParams();

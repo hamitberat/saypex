@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button';
 import { Separator } from '../components/ui/separator';
 import VideoCard from '../components/VideoCard';
 import CommentSection from '../components/CommentSection';
-import { mockVideos, mockComments } from '../mock/mockData';
+import { videoApi, handleApiError } from '../services/api';
 
 const Watch = ({ sidebarOpen }) => {
   const [searchParams] = useSearchParams();

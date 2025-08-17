@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import VideoCard from '../components/VideoCard';
-import { mockVideos } from '../mock/mockData';
+import { videoApi, handleApiError } from '../services/api';
 import { Button } from '../components/ui/button';
 import { Flame, Music, Gamepad2, Trophy, Lightbulb, Film } from 'lucide-react';
 

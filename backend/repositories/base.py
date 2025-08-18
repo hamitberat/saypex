@@ -50,6 +50,25 @@ class BaseRepository(Generic[T], ABC):
             logger.error(f"Error creating {self.model_class.__name__}: {e}")
             raise
     
+    def _convert_objectids_to_strings(self, doc_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Convert ObjectId fields to strings for Pydantic compatibility"""
+        if not doc_data:
+            return doc_data
+        
+        # Convert _id to string
+        if '_id' in doc_data and isinstance(doc_data['_id'], ObjectId):
+            doc_data['_id'] = str(doc_data['_id'])
+        
+        # Convert other ObjectId fields to strings
+        for key, value in doc_data.items():
+            if isinstance(value, ObjectId):
+                doc_data[key] = str(value)
+            elif isinstance(value, list):
+                # Handle lists that might contain ObjectIds
+                doc_data[key] = [str(item) if isinstance(item, ObjectId) else item for item in value]
+        
+        return doc_data
+    
     async def get_by_id(self, document_id: str) -> Optional[T]:
         """Get document by ID"""
         try:
@@ -57,6 +76,7 @@ class BaseRepository(Generic[T], ABC):
             doc_data = await collection.find_one({"_id": ObjectId(document_id)})
             
             if doc_data:
+                doc_data = self._convert_objectids_to_strings(doc_data)
                 return self.model_class(**doc_data)
             return None
             
@@ -71,6 +91,7 @@ class BaseRepository(Generic[T], ABC):
             doc_data = await collection.find_one({field: value})
             
             if doc_data:
+                doc_data = self._convert_objectids_to_strings(doc_data)
                 return self.model_class(**doc_data)
             return None
             

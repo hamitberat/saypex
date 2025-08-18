@@ -88,25 +88,25 @@ const VideoCard = ({ video, layout = 'grid' }) => {
           onClick={handleChannelClick}
         >
           <img
-            src={video.channelAvatar}
-            alt={video.channelName}
+            src={video.channelAvatar || '/placeholder-avatar.jpg'}
+            alt={video.channelName || 'Channel avatar'}
             className="w-9 h-9 rounded-full object-cover hover:scale-105 transition-transform duration-200"
           />
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="font-medium text-base line-clamp-2 mb-1 leading-tight group-hover:text-blue-600 transition-colors duration-200">
-            {video.title}
+            {video.title || 'Untitled Video'}
           </h3>
           <div 
             className="text-sm text-gray-600 hover:text-gray-800 cursor-pointer mb-1 transition-colors duration-200"
             onClick={handleChannelClick}
           >
-            {video.channelName}
+            {video.channelName || 'Unknown Channel'}
           </div>
           <div className="flex items-center text-sm text-gray-500 space-x-1">
             <span>{formatViews(video.views)} views</span>
             <span>•</span>
-            <span>{video.uploadTime}</span>
+            <span>{video.uploadTime || 'Unknown time'}</span>
           </div>
         </div>
       </div>

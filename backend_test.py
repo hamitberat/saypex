@@ -589,10 +589,10 @@ class YouTubeCloneAPITester:
     
     def run_all_tests(self):
         """Run all tests"""
-        print("🚀 Starting YouTube Clone Backend API Tests")
+        print("🚀 Starting SAYPEX Backend API Tests - Modular Monolith Architecture")
         print(f"Testing against: {self.base_url}")
         
-        # Run tests in order
+        # Run core tests first
         self.test_health_check()
         self.test_user_registration()
         self.test_user_login()
@@ -604,12 +604,23 @@ class YouTubeCloneAPITester:
         self.test_get_video_recommendations()
         self.test_get_video_comments()
         self.test_create_comment()
+        
+        # Run modular architecture tests
+        print("\n" + "="*60)
+        print("🏗️  MODULAR MONOLITH ARCHITECTURE TESTING")
+        print("="*60)
+        self.test_modular_upload_module()
+        self.test_modular_oauth_module()
+        self.test_modular_2fa_module()
+        self.test_modular_architecture_boundaries()
+        
+        # Run error handling tests
         self.test_error_cases()
         
         # Print summary
-        print("\n" + "="*50)
-        print("📊 TEST SUMMARY")
-        print("="*50)
+        print("\n" + "="*60)
+        print("📊 MODULAR MONOLITH TEST SUMMARY")
+        print("="*60)
         print(f"✅ Passed: {self.results['passed']}")
         print(f"❌ Failed: {self.results['failed']}")
         print(f"📈 Success Rate: {(self.results['passed'] / (self.results['passed'] + self.results['failed']) * 100):.1f}%")

@@ -89,7 +89,7 @@ async def search_videos(
         )
 
 
-@router.get("/trending", response_model=List[VideoResponse])
+@router.get("/trending/", response_model=List[VideoResponse])
 async def get_trending_videos(
     category: Optional[VideoCategory] = Query(None, description="Filter by category"),
     limit: int = Query(50, ge=1, le=100, description="Number of videos to return")

@@ -141,7 +141,7 @@ db_manager = DatabaseManager()
 
 async def get_database() -> AsyncIOMotorDatabase:
     """Get database instance"""
-    if not db_manager.database:
+    if db_manager.database is None:
         await db_manager.connect()
     return db_manager.database
 

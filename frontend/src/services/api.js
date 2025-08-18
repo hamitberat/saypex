@@ -74,13 +74,13 @@ export const videoApi = {
 
   // Search videos
   searchVideos: async (params = {}) => {
-    const response = await api.get('/videos/search', { params });
+    const response = await api.get('/videos/search/', { params });
     return response.data;
   },
 
   // Get trending videos
   getTrendingVideos: async (params = {}) => {
-    const response = await api.get('/videos/trending', { params });
+    const response = await api.get('/videos/trending/', { params });
     return response.data;
   },
 

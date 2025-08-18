@@ -238,7 +238,11 @@ class BaseRepository(Generic[T], ABC):
         try:
             collection = await self.get_collection()
             cursor = collection.aggregate(pipeline)
-            return await cursor.to_list(length=None)
+            documents = await cursor.to_list(length=None)
+            
+            # Convert ObjectIds to strings for each document
+            converted_docs = [self._convert_objectids_to_strings(doc) for doc in documents]
+            return converted_docs
             
         except Exception as e:
             logger.error(f"Error executing aggregation on {self.model_class.__name__}: {e}")

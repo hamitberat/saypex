@@ -322,11 +322,11 @@ class YouTubeCloneAPITester:
         
         comment_data = {
             "video_id": self.test_video_id,
-            "content": "This is a test comment for the YouTube clone API testing!"
+            "content": "This is a test comment for the SAYPEX platform testing!"
         }
         
         try:
-            response = self.make_request("POST", "/comments", json=comment_data)
+            response = self.make_request("POST", "/comments/", json=comment_data)
             if response.status_code == 200:
                 data = response.json()
                 if "id" in data and "content" in data:

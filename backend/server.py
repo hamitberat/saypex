@@ -6,13 +6,13 @@ import os
 from pathlib import Path
 
 # Import core components
-from .core.database import init_database, close_database
-from .core.cache import init_cache, close_cache
+from backend.core.database import init_database, close_database
+from backend.core.cache import init_cache, close_cache
 
 # Import API routers
-from .api.videos import router as videos_router
-from .api.users import router as users_router  
-from .api.comments import router as comments_router
+from backend.api.videos import router as videos_router
+from backend.api.users import router as users_router  
+from backend.api.comments import router as comments_router
 
 # Configure logging
 logging.basicConfig(

@@ -191,8 +191,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Authentication System (Login/Signup API)"
-    - "User Management and Database"
     - "Authentication Pages (Login/Signup)"
   stuck_tasks: []
   test_all: false

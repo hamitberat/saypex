@@ -107,7 +107,7 @@ class UploadService:
             # Update user stats
             await self.user_repo.update_by_id(user_id, {
                 "$inc": {"stats.videos_uploaded": 1},
-                "$set": {"last_video_upload": datetime.utcnow()}
+                "$set": {"stats.last_video_upload": datetime.utcnow()}
             })
             
             # Clear cache

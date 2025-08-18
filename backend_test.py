@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-YouTube Clone Backend API Test Suite
-Tests all backend endpoints for functionality and error handling
+SAYPEX Backend API Test Suite - Modular Monolith Architecture
+Tests all backend endpoints for functionality and modular architecture compliance
+Validates Upload, OAuth, 2FA modules and service layer separation
 """
 
 import requests

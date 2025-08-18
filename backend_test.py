@@ -193,7 +193,17 @@ class YouTubeCloneAPITester:
                         self.test_video_id = data[0].get("id")
                         self.log_result("Get videos (home page)", True, f"Retrieved {len(data)} videos")
                     else:
-                        self.log_result("Get videos (home page)", True, "No videos found (empty database)")
+                        # If no videos from home endpoint, try trending to get a video ID
+                        trending_response = self.make_request("GET", "/videos/trending/")
+                        if trending_response.status_code == 200:
+                            trending_data = trending_response.json()
+                            if isinstance(trending_data, list) and len(trending_data) > 0:
+                                self.test_video_id = trending_data[0].get("id")
+                                self.log_result("Get videos (home page)", True, f"No videos from home, but found {len(trending_data)} trending videos")
+                            else:
+                                self.log_result("Get videos (home page)", True, "No videos found (empty database)")
+                        else:
+                            self.log_result("Get videos (home page)", True, "No videos found (empty database)")
                 else:
                     self.log_result("Get videos (home page)", False, f"Expected list, got: {type(data)}")
             else:

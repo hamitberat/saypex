@@ -34,20 +34,20 @@ const VideoCard = ({ video, layout = 'grid' }) => {
       <div className="flex space-x-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors duration-200" onClick={handleVideoClick}>
         <div className="relative flex-shrink-0">
           <img
-            src={video.thumbnail}
-            alt={video.title}
+            src={video.thumbnail || '/placeholder-thumbnail.jpg'}
+            alt={video.title || 'Video thumbnail'}
             className="w-40 h-24 object-cover rounded-lg"
             onLoad={() => setImageLoaded(true)}
           />
           <div className="absolute bottom-1 right-1 bg-black bg-opacity-80 text-white text-xs px-1 py-0.5 rounded">
-            {video.duration}
+            {video.duration || '0:00'}
           </div>
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-medium text-sm line-clamp-2 mb-1 leading-tight">{video.title}</h3>
-          <div className="text-xs text-gray-600 mb-1">{video.channelName}</div>
+          <h3 className="font-medium text-sm line-clamp-2 mb-1 leading-tight">{video.title || 'Untitled Video'}</h3>
+          <div className="text-xs text-gray-600 mb-1">{video.channelName || 'Unknown Channel'}</div>
           <div className="text-xs text-gray-500">
-            {formatViews(video.views)} views • {video.uploadTime}
+            {formatViews(video.views)} views • {video.uploadTime || 'Unknown time'}
           </div>
         </div>
       </div>

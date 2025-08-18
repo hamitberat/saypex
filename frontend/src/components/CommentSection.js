@@ -1,29 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThumbsUp, ThumbsDown, MoreVertical, Reply } from 'lucide-react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
+import { commentApi, authHelpers, handleApiError } from '../services/api';
 
-const CommentSection = ({ videoId, comments = [] }) => {
+const CommentSection = ({ videoId }) => {
   const [newComment, setNewComment] = useState('');
   const [showCommentInput, setShowCommentInput] = useState(false);
-  const [localComments, setLocalComments] = useState(comments.filter(c => c.videoId === videoId));
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentUser] = useState(authHelpers.getCurrentUser());
 
-  const handleSubmitComment = () => {
-    if (newComment.trim()) {
-      const comment = {
-        id: Date.now().toString(),
-        videoId,
-        author: 'You',
-        authorAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face',
-        content: newComment,
-        likes: 0,
-        timestamp: 'now',
-        replies: []
-      };
-      setLocalComments([comment, ...localComments]);
-      setNewComment('');
-      setShowCommentInput(false);
+  useEffect(() => {
+    loadComments();
+  }, [videoId]);
+
+  const loadComments = async () => {
+    if (!videoId) return;
+    
+    try {
+      setLoading(true);
+      const commentsData = await commentApi.getVideoComments(videoId, {
+        limit: 50,
+        include_replies: true
+      });
+      setComments(commentsData.comments || []);
+    } catch (error) {
+      console.error('Error loading comments:', handleApiError(error));
+      setComments([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmitComment = async () => {
+    if (newComment.trim() && currentUser) {
+      try {
+        const commentData = {
+          content: newComment,
+          video_id: videoId
+        };
+        
+        const createdComment = await commentApi.createComment(commentData);
+        
+        // Add new comment to the top of the list
+        setComments([createdComment, ...comments]);
+        setNewComment('');
+        setShowCommentInput(false);
+      } catch (error) {
+        console.error('Error creating comment:', handleApiError(error));
+        alert('Failed to post comment. Please try again.');
+      }
+    }
+  };
+
+  const handleLikeComment = async (commentId) => {
+    if (!currentUser) {
+      alert('Please sign in to like comments');
+      return;
+    }
+
+    try {
+      await commentApi.likeComment(commentId);
+      // Update the comment in the list
+      setComments(comments.map(comment => 
+        comment.id === commentId 
+          ? { ...comment, metrics: { ...comment.metrics, likes: comment.metrics.likes + 1 }}
+          : comment
+      ));
+    } catch (error) {
+      console.error('Error liking comment:', handleApiError(error));
     }
   };
 

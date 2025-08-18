@@ -17,6 +17,9 @@ from backend.core.cache import init_cache, close_cache
 from backend.api.videos import router as videos_router
 from backend.api.users import router as users_router  
 from backend.api.comments import router as comments_router
+from backend.api.upload import router as upload_router
+from backend.api.oauth import router as oauth_router
+from backend.api.tfa import router as tfa_router
 
 # Configure logging
 logging.basicConfig(

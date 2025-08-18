@@ -17,12 +17,25 @@ const Trending = ({ sidebarOpen }) => {
   ];
 
   useEffect(() => {
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setVideos(mockTrendingVideos);
-      setLoading(false);
-    }, 500);
+    const loadTrendingVideos = async () => {
+      setLoading(true);
+      try {
+        const params = { limit: 50 };
+        if (selectedCategory !== 'Now') {
+          params.category = selectedCategory.toLowerCase();
+        }
+        
+        const trendingData = await videoApi.getTrendingVideos(params);
+        setVideos(trendingData);
+      } catch (error) {
+        console.error('Error loading trending videos:', handleApiError(error));
+        setVideos([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTrendingVideos();
   }, [selectedCategory]);
 
   if (loading) {

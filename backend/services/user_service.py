@@ -2,9 +2,6 @@ from typing import Optional, List
 from datetime import datetime, timedelta
 import logging
 import secrets
-import hashlib
-from passlib.context import CryptContext
-import jwt
 
 from ..models.user import (
     User, UserResponse, PublicUserResponse, UserCreateRequest, 
@@ -12,17 +9,9 @@ from ..models.user import (
 )
 from ..repositories.user_repository import user_repository
 from ..core.cache import get_cache
-import os
+from ..core.security import create_access_token, verify_token, hash_password, verify_password, ACCESS_TOKEN_EXPIRE_MINUTES
 
 logger = logging.getLogger(__name__)
-
-# Password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-# JWT settings
-SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "your-secret-key-change-in-production")
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 class UserService:
@@ -30,34 +19,6 @@ class UserService:
     
     def __init__(self):
         self.user_repo = user_repository
-    
-    def hash_password(self, password: str) -> str:
-        """Hash password using bcrypt"""
-        return pwd_context.hash(password)
-    
-    def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """Verify password against hash"""
-        return pwd_context.verify(plain_password, hashed_password)
-    
-    def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None):
-        """Create JWT access token"""
-        to_encode = data.copy()
-        if expires_delta:
-            expire = datetime.utcnow() + expires_delta
-        else:
-            expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-        
-        to_encode.update({"exp": expire})
-        encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-        return encoded_jwt
-    
-    def verify_token(self, token: str) -> Optional[dict]:
-        """Verify JWT token and return payload"""
-        try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-            return payload
-        except jwt.PyJWTError:
-            return None
     
     async def create_user(self, user_data: UserCreateRequest) -> Optional[UserResponse]:
         """Create a new user account"""
@@ -74,7 +35,7 @@ class UserService:
                 return None
             
             # Hash password
-            password_hash = self.hash_password(user_data.password)
+            password_hash = hash_password(user_data.password)
             
             # Create user
             user = await self.user_repo.create_user(
@@ -109,7 +70,7 @@ class UserService:
                 return None
             
             # Verify password
-            if not self.verify_password(login_data.password, user.password_hash):
+            if not verify_password(login_data.password, user.password_hash):
                 logger.warning(f"Login failed - invalid password: {login_data.email}")
                 return None
             
@@ -123,7 +84,7 @@ class UserService:
             
             # Create access token
             access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-            access_token = self.create_access_token(
+            access_token = create_access_token(
                 data={"sub": str(user.id), "username": user.username, "role": user.role},
                 expires_delta=access_token_expires
             )
@@ -155,7 +116,7 @@ class UserService:
     async def get_user_by_token(self, token: str) -> Optional[UserResponse]:
         """Get user from JWT token"""
         try:
-            payload = self.verify_token(token)
+            payload = verify_token(token)
             if not payload:
                 return None
             
@@ -340,12 +301,12 @@ class UserService:
                 return False
             
             # Verify current password
-            if not self.verify_password(current_password, user.password_hash):
+            if not verify_password(current_password, user.password_hash):
                 logger.warning(f"Password change failed - invalid current password: {user_id}")
                 return False
             
             # Hash new password
-            new_password_hash = self.hash_password(new_password)
+            new_password_hash = hash_password(new_password)
             
             # Update password
             success = await self.user_repo.update_password(user_id, new_password_hash)

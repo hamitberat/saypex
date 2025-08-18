@@ -95,9 +95,11 @@ const Settings = () => {
             <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-gray-800 flex items-center">
-                  {tabs.find(tab => tab.id === activeTab)?.icon && (
-                    <tabs.find(tab => tab.id === activeTab).icon className="w-5 h-5 mr-2" />
-                  )}
+                  {(() => {
+                    const activeTabData = tabs.find(tab => tab.id === activeTab);
+                    const IconComponent = activeTabData?.icon;
+                    return IconComponent ? <IconComponent className="w-5 h-5 mr-2" /> : null;
+                  })()}
                   {tabs.find(tab => tab.id === activeTab)?.name} Settings
                 </CardTitle>
               </CardHeader>

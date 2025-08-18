@@ -180,49 +180,6 @@ async def delete_video(
         )
 
 
-@router.get("/search", response_model=List[VideoResponse])
-async def search_videos(
-    q: str = Query(..., description="Search query"),
-    category: Optional[VideoCategory] = Query(None, description="Filter by category"),
-    sort_by: str = Query("relevance", description="Sort by: relevance, date, views, likes"),
-    limit: int = Query(50, ge=1, le=100, description="Number of videos to return"),
-    offset: int = Query(0, ge=0, description="Number of videos to skip")
-):
-    """Search videos"""
-    try:
-        videos = await video_service.search_videos(
-            query=q,
-            category=category,
-            sort_by=sort_by,
-            limit=limit,
-            offset=offset
-        )
-        return videos
-    except Exception as e:
-        logger.error(f"Error searching videos: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to search videos"
-        )
-
-
-@router.get("/trending", response_model=List[VideoResponse])
-async def get_trending_videos(
-    category: Optional[VideoCategory] = Query(None, description="Filter by category"),
-    limit: int = Query(50, ge=1, le=100, description="Number of videos to return")
-):
-    """Get trending videos"""
-    try:
-        videos = await video_service.get_trending_videos(category=category, limit=limit)
-        return videos
-    except Exception as e:
-        logger.error(f"Error getting trending videos: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to get trending videos"
-        )
-
-
 @router.get("/{video_id}/recommendations", response_model=List[VideoResponse])
 async def get_video_recommendations(
     video_id: str,

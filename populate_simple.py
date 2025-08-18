@@ -139,8 +139,8 @@ MOCK_DATA['videos'] = [
             'engagement_rate': 0.055
         },
         'trending_score': 82.3,
-        'created_at': datetime.utcnow() - timedelta(days=5),
-        'updated_at': datetime.utcnow() - timedelta(days=5),
+        'created_at': datetime.utcnow() - timedelta(hours=5),
+        'updated_at': datetime.utcnow() - timedelta(hours=5),
         'version': 1
     }
 ]

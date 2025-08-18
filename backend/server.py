@@ -3,7 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import logging
 import os
+import sys
 from pathlib import Path
+
+# Add the app directory to Python path
+sys.path.insert(0, '/app')
 
 # Import core components
 from backend.core.database import init_database, close_database

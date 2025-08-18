@@ -7,13 +7,18 @@ const VideoCard = ({ video, layout = 'grid' }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
 
+  // Safety check for video object
+  if (!video) {
+    return null;
+  }
+
   const handleVideoClick = () => {
     navigate(`/watch?v=${video.id}`);
   };
 
   const handleChannelClick = (e) => {
     e.stopPropagation();
-    navigate(`/channel/${video.channelName}`);
+    navigate(`/channel/${video.channelName || 'unknown'}`);
   };
 
   const formatViews = (views) => {

@@ -63,7 +63,7 @@ async def create_video(
         )
 
 
-@router.get("/search", response_model=List[VideoResponse])
+@router.get("/search/", response_model=List[VideoResponse])
 async def search_videos(
     q: str = Query(..., description="Search query"),
     category: Optional[VideoCategory] = Query(None, description="Filter by category"),

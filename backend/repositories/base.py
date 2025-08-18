@@ -25,7 +25,7 @@ class BaseRepository(Generic[T], ABC):
     
     async def get_collection(self) -> AsyncIOMotorCollection:
         """Get MongoDB collection with lazy initialization"""
-        if not self._collection:
+        if self._collection is None:
             self._db = await get_database()
             self._collection = self._db[self.collection_name]
         return self._collection

@@ -121,9 +121,10 @@ class YouTubeCloneAPITester:
         """Test user login"""
         print("\n=== Testing User Login ===")
         
+        # Try with existing user from populate script first
         login_data = {
-            "email": "testuser@youtube.com",
-            "password": "SecurePass123!"
+            "email": "codemaster@example.com",
+            "password": "password123"
         }
         
         try:
@@ -133,10 +134,25 @@ class YouTubeCloneAPITester:
                 if "access_token" in data:
                     self.auth_token = data["access_token"]
                     self.log_result("User login", True, "Token received")
+                    return
                 else:
                     self.log_result("User login", False, f"No access token: {data}")
             else:
-                self.log_result("User login", False, f"Status: {response.status_code}, Response: {response.text}")
+                # Try with test user if existing user fails
+                login_data = {
+                    "email": "testuser@youtube.com",
+                    "password": "SecurePass123!"
+                }
+                response = self.make_request("POST", "/users/login", json=login_data)
+                if response.status_code == 200:
+                    data = response.json()
+                    if "access_token" in data:
+                        self.auth_token = data["access_token"]
+                        self.log_result("User login", True, "Token received")
+                    else:
+                        self.log_result("User login", False, f"No access token: {data}")
+                else:
+                    self.log_result("User login", False, f"Status: {response.status_code}, Response: {response.text}")
         except Exception as e:
             self.log_result("User login", False, f"Error: {str(e)}")
     

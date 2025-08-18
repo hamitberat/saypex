@@ -61,14 +61,14 @@ const VideoCard = ({ video, layout = 'grid' }) => {
           imageLoaded ? '' : 'animate-pulse'
         }`}>
           <img
-            src={video.thumbnail}
-            alt={video.title}
+            src={video.thumbnail || '/placeholder-thumbnail.jpg'}
+            alt={video.title || 'Video thumbnail'}
             className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
             onLoad={() => setImageLoaded(true)}
           />
         </div>
         <div className="absolute bottom-2 right-2 bg-black bg-opacity-90 text-white text-xs px-2 py-1 rounded font-medium">
-          {video.duration}
+          {video.duration || '0:00'}
         </div>
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <Button 

@@ -263,7 +263,9 @@ class BaseRepository(Generic[T], ABC):
             ).sort([("score", {"$meta": "textScore"})]).skip(offset).limit(limit)
             
             documents = await cursor.to_list(length=limit)
-            return [self.model_class(**doc) for doc in documents]
+            # Convert ObjectIds to strings for each document
+            converted_docs = [self._convert_objectids_to_strings(doc) for doc in documents]
+            return [self.model_class(**doc) for doc in converted_docs]
             
         except Exception as e:
             logger.error(f"Error performing text search on {self.model_class.__name__}: {e}")

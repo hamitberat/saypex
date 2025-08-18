@@ -90,6 +90,18 @@ class User(BaseDocument):
     channel_banner_url: Optional[str] = None
     is_verified: bool = Field(default=False)
     
+    # OAuth integration
+    oauth_providers: List[str] = Field(default_factory=list)
+    
+    # Two-Factor Authentication
+    tfa_enabled: bool = Field(default=False)
+    tfa_secret: Optional[str] = None
+    tfa_backup_codes: List[str] = Field(default_factory=list)
+    tfa_setup_at: Optional[datetime] = None
+    tfa_verified_at: Optional[datetime] = None
+    tfa_disabled_at: Optional[datetime] = None
+    tfa_backup_codes_generated_at: Optional[datetime] = None
+    
     # Timestamps
     last_login: Optional[datetime] = None
     last_video_upload: Optional[datetime] = None

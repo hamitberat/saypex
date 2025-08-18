@@ -11,7 +11,7 @@ import os
 from typing import Dict, Any, Optional
 
 # Get backend URL from environment
-BACKEND_URL = "https://ec1a5ac6-f52f-4597-8bc9-3a3ba9e1c2ec.preview.emergentagent.com/api"
+BACKEND_URL = "https://saypex-stream.preview.emergentagent.com/api"
 
 class YouTubeCloneAPITester:
     def __init__(self):

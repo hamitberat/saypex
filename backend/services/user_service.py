@@ -9,7 +9,7 @@ from ..models.user import (
 )
 from ..repositories.user_repository import user_repository
 from ..core.cache import get_cache
-from ..core.security import create_access_token, verify_token, hash_password, verify_password, ACCESS_TOKEN_EXPIRE_MINUTES
+from ..core.security import create_access_token, verify_token, hash_password, verify_password, ACCESS_TOKEN_EXPIRE_MINUTES, ACCESS_TOKEN_EXPIRE_MINUTES
 
 logger = logging.getLogger(__name__)
 

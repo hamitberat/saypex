@@ -206,7 +206,7 @@ class YouTubeCloneAPITester:
         print("\n=== Testing Video Search ===")
         
         try:
-            response = self.make_request("GET", "/videos/search", params={"q": "test"})
+            response = self.make_request("GET", "/videos/search/", params={"q": "test"})
             if response.status_code == 200:
                 data = response.json()
                 if isinstance(data, list):
@@ -223,7 +223,7 @@ class YouTubeCloneAPITester:
         print("\n=== Testing Get Trending Videos ===")
         
         try:
-            response = self.make_request("GET", "/videos/trending")
+            response = self.make_request("GET", "/videos/trending/")
             if response.status_code == 200:
                 data = response.json()
                 if isinstance(data, list):

@@ -205,8 +205,8 @@ for video_data in additional_videos:
             'engagement_rate': 0.05
         },
         'trending_score': 75.0,
-        'created_at': datetime.utcnow() - timedelta(days=video_data['days_ago']),
-        'updated_at': datetime.utcnow() - timedelta(days=video_data['days_ago']),
+        'created_at': datetime.utcnow() - timedelta(hours=video_data['days_ago']),
+        'updated_at': datetime.utcnow() - timedelta(hours=video_data['days_ago']),
         'version': 1
     }
     MOCK_DATA['videos'].append(video)

@@ -8,6 +8,9 @@ import SearchResults from './pages/SearchResults';
 import Trending from './pages/Trending';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Upload from './pages/Upload';
+import Settings from './pages/Settings';
+import TFASettings from './pages/TFASettings';
 import { Toaster } from './components/ui/sonner';
 import './App.css';
 

@@ -96,8 +96,9 @@ function App() {
                   <Route path="/learning" element={<Home sidebarOpen={sidebarOpen} />} />
                   <Route path="/fashion" element={<Home sidebarOpen={sidebarOpen} />} />
                   <Route path="/channel/:channelName" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/upload" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/settings" element={<Home sidebarOpen={sidebarOpen} />} />
+                  <Route path="/upload" element={<Upload />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/settings/2fa" element={<TFASettings />} />
                   <Route path="/help" element={<Home sidebarOpen={sidebarOpen} />} />
                 </Routes>
               </main>

@@ -28,16 +28,30 @@ const SearchResults = ({ sidebarOpen }) => {
   ];
 
   useEffect(() => {
-    if (query) {
-      setLoading(true);
-      // Simulate API call
-      setTimeout(() => {
-        const searchResults = mockSearchResults(query);
-        setResults(searchResults);
-        setLoading(false);
-      }, 500);
-    }
-  }, [query]);
+    const performSearch = async () => {
+      if (query) {
+        setLoading(true);
+        try {
+          const params = {
+            q: query,
+            sort_by: sortBy,
+            limit: 20,
+            offset: 0
+          };
+          
+          const searchResults = await videoApi.searchVideos(params);
+          setResults(searchResults);
+        } catch (error) {
+          console.error('Search error:', handleApiError(error));
+          setResults([]);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    performSearch();
+  }, [query, sortBy]);
 
   if (loading) {
     return (

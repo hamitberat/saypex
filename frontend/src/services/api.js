@@ -44,7 +44,7 @@ api.interceptors.response.use(
 export const videoApi = {
   // Get videos for home page
   getVideos: async (params = {}) => {
-    const response = await api.get('/videos', { params });
+    const response = await api.get('/videos/', { params });
     return response.data;
   },
 

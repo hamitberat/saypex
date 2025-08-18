@@ -32,8 +32,8 @@ class DatabaseManager:
                 retryReads=True,  # Retry read operations
                 retryWrites=True,  # Retry write operations
                 w='majority',  # Write concern for consistency
-                readPreference='primaryPreferred',  # Read from primary when available
-                readConcern={'level': 'majority'}  # Read concern for consistency
+                readPreference='primaryPreferred'  # Read from primary when available
+                # Removed readConcern as it's not supported in this format
             )
             
             # Test connection

@@ -46,6 +46,7 @@ class UserStats(BaseModel):
     likes_given: int = Field(default=0, ge=0)
     comments_made: int = Field(default=0, ge=0)
     last_active: Optional[datetime] = None
+    last_video_upload: Optional[datetime] = None
 
 
 class User(BaseDocument):

@@ -108,6 +108,9 @@ async def health_check():
 api_router.include_router(videos_router)
 api_router.include_router(users_router)
 api_router.include_router(comments_router)
+api_router.include_router(upload_router)
+api_router.include_router(oauth_router)
+api_router.include_router(tfa_router)
 
 # Include the API router in the main app
 app.include_router(api_router)

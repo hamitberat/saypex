@@ -328,6 +328,210 @@ class YouTubeCloneAPITester:
         except Exception as e:
             self.log_result("Create comment", False, f"Error: {str(e)}")
     
+    def test_modular_upload_module(self):
+        """Test Upload Module - Modular Monolith Architecture"""
+        print("\n=== Testing Upload Module (Modular Architecture) ===")
+        
+        # Test supported formats endpoint
+        try:
+            response = self.make_request("GET", "/upload/formats")
+            if response.status_code == 200:
+                data = response.json()
+                if "video_formats" in data and "thumbnail_formats" in data:
+                    self.log_result("Upload Module - Get supported formats", True, f"Formats: {len(data['video_formats'])} video, {len(data['thumbnail_formats'])} thumbnail")
+                else:
+                    self.log_result("Upload Module - Get supported formats", False, f"Missing format data: {data}")
+            else:
+                self.log_result("Upload Module - Get supported formats", False, f"Status: {response.status_code}")
+        except Exception as e:
+            self.log_result("Upload Module - Get supported formats", False, f"Error: {str(e)}")
+        
+        # Test my-videos endpoint (requires auth)
+        if self.auth_token:
+            try:
+                response = self.make_request("GET", "/upload/my-videos")
+                if response.status_code == 200:
+                    data = response.json()
+                    if isinstance(data, list):
+                        self.log_result("Upload Module - Get my videos", True, f"Retrieved {len(data)} user videos")
+                    else:
+                        self.log_result("Upload Module - Get my videos", False, f"Expected list, got: {type(data)}")
+                else:
+                    self.log_result("Upload Module - Get my videos", False, f"Status: {response.status_code}")
+            except Exception as e:
+                self.log_result("Upload Module - Get my videos", False, f"Error: {str(e)}")
+        else:
+            self.log_result("Upload Module - Get my videos", False, "No auth token available")
+    
+    def test_modular_oauth_module(self):
+        """Test OAuth Module - Modular Monolith Architecture"""
+        print("\n=== Testing OAuth Module (Modular Architecture) ===")
+        
+        # Test OAuth providers endpoint
+        try:
+            response = self.make_request("GET", "/oauth/providers")
+            if response.status_code == 200:
+                data = response.json()
+                if "providers" in data and isinstance(data["providers"], list):
+                    providers = [p["name"] for p in data["providers"]]
+                    expected_providers = ["google", "facebook"]
+                    if all(provider in providers for provider in expected_providers):
+                        self.log_result("OAuth Module - Get providers", True, f"Providers: {providers}")
+                    else:
+                        self.log_result("OAuth Module - Get providers", False, f"Missing expected providers. Got: {providers}")
+                else:
+                    self.log_result("OAuth Module - Get providers", False, f"Invalid response structure: {data}")
+            else:
+                self.log_result("OAuth Module - Get providers", False, f"Status: {response.status_code}")
+        except Exception as e:
+            self.log_result("OAuth Module - Get providers", False, f"Error: {str(e)}")
+        
+        # Test OAuth login initiation (Google)
+        try:
+            response = self.make_request("GET", "/oauth/google/login", params={"redirect_uri": "https://example.com/callback"})
+            if response.status_code == 200:
+                data = response.json()
+                if "auth_url" in data and "provider" in data:
+                    self.log_result("OAuth Module - Google login initiation", True, f"Provider: {data['provider']}")
+                else:
+                    self.log_result("OAuth Module - Google login initiation", False, f"Missing auth data: {data}")
+            else:
+                self.log_result("OAuth Module - Google login initiation", False, f"Status: {response.status_code}")
+        except Exception as e:
+            self.log_result("OAuth Module - Google login initiation", False, f"Error: {str(e)}")
+        
+        # Test OAuth login initiation (Facebook)
+        try:
+            response = self.make_request("GET", "/oauth/facebook/login", params={"redirect_uri": "https://example.com/callback"})
+            if response.status_code == 200:
+                data = response.json()
+                if "auth_url" in data and "provider" in data:
+                    self.log_result("OAuth Module - Facebook login initiation", True, f"Provider: {data['provider']}")
+                else:
+                    self.log_result("OAuth Module - Facebook login initiation", False, f"Missing auth data: {data}")
+            else:
+                self.log_result("OAuth Module - Facebook login initiation", False, f"Status: {response.status_code}")
+        except Exception as e:
+            self.log_result("OAuth Module - Facebook login initiation", False, f"Error: {str(e)}")
+    
+    def test_modular_2fa_module(self):
+        """Test 2FA Module - Modular Monolith Architecture"""
+        print("\n=== Testing 2FA Module (Modular Architecture) ===")
+        
+        # Test 2FA information endpoint
+        try:
+            response = self.make_request("GET", "/2fa/info")
+            if response.status_code == 200:
+                data = response.json()
+                if "supported_methods" in data and "issuer" in data:
+                    methods = [method["name"] for method in data["supported_methods"]]
+                    expected_methods = ["totp", "backup_codes"]
+                    if all(method in methods for method in expected_methods):
+                        self.log_result("2FA Module - Get 2FA info", True, f"Methods: {methods}, Issuer: {data['issuer']}")
+                    else:
+                        self.log_result("2FA Module - Get 2FA info", False, f"Missing expected methods. Got: {methods}")
+                else:
+                    self.log_result("2FA Module - Get 2FA info", False, f"Invalid response structure: {data}")
+            else:
+                self.log_result("2FA Module - Get 2FA info", False, f"Status: {response.status_code}")
+        except Exception as e:
+            self.log_result("2FA Module - Get 2FA info", False, f"Error: {str(e)}")
+        
+        # Test 2FA status endpoint (requires auth)
+        if self.auth_token:
+            try:
+                response = self.make_request("GET", "/2fa/status")
+                if response.status_code == 200:
+                    data = response.json()
+                    if "enabled" in data:
+                        self.log_result("2FA Module - Get 2FA status", True, f"2FA enabled: {data['enabled']}")
+                    else:
+                        self.log_result("2FA Module - Get 2FA status", False, f"Missing status data: {data}")
+                else:
+                    self.log_result("2FA Module - Get 2FA status", False, f"Status: {response.status_code}")
+            except Exception as e:
+                self.log_result("2FA Module - Get 2FA status", False, f"Error: {str(e)}")
+        else:
+            self.log_result("2FA Module - Get 2FA status", False, "No auth token available")
+        
+        # Test 2FA verify-login endpoint (informational)
+        try:
+            response = self.make_request("POST", "/2fa/verify-login", json={"code": "123456"})
+            if response.status_code == 200:
+                data = response.json()
+                if "supported_methods" in data:
+                    self.log_result("2FA Module - Verify login endpoint", True, f"Methods: {data['supported_methods']}")
+                else:
+                    self.log_result("2FA Module - Verify login endpoint", False, f"Missing method data: {data}")
+            else:
+                self.log_result("2FA Module - Verify login endpoint", False, f"Status: {response.status_code}")
+        except Exception as e:
+            self.log_result("2FA Module - Verify login endpoint", False, f"Error: {str(e)}")
+    
+    def test_modular_architecture_boundaries(self):
+        """Test Modular Architecture Boundaries and Integration"""
+        print("\n=== Testing Modular Architecture Boundaries ===")
+        
+        # Test that modules are independently accessible
+        modules_tested = []
+        
+        # Upload module independence
+        try:
+            response = self.make_request("GET", "/upload/formats")
+            if response.status_code == 200:
+                modules_tested.append("upload")
+        except:
+            pass
+        
+        # OAuth module independence
+        try:
+            response = self.make_request("GET", "/oauth/providers")
+            if response.status_code == 200:
+                modules_tested.append("oauth")
+        except:
+            pass
+        
+        # 2FA module independence
+        try:
+            response = self.make_request("GET", "/2fa/info")
+            if response.status_code == 200:
+                modules_tested.append("2fa")
+        except:
+            pass
+        
+        # Core modules (users, videos)
+        try:
+            response = self.make_request("GET", "/")
+            if response.status_code == 200:
+                modules_tested.append("core")
+        except:
+            pass
+        
+        if len(modules_tested) >= 3:
+            self.log_result("Modular Architecture - Module Independence", True, f"Modules accessible: {modules_tested}")
+        else:
+            self.log_result("Modular Architecture - Module Independence", False, f"Only {len(modules_tested)} modules accessible: {modules_tested}")
+        
+        # Test single deployment unit (all modules in same API)
+        try:
+            base_response = self.make_request("GET", "/")
+            upload_response = self.make_request("GET", "/upload/formats")
+            oauth_response = self.make_request("GET", "/oauth/providers")
+            tfa_response = self.make_request("GET", "/2fa/info")
+            
+            all_same_host = all(
+                response.url.split('/api')[0] == base_response.url.split('/api')[0]
+                for response in [upload_response, oauth_response, tfa_response]
+                if response.status_code == 200
+            )
+            
+            if all_same_host:
+                self.log_result("Modular Architecture - Single Deployment Unit", True, "All modules deployed together")
+            else:
+                self.log_result("Modular Architecture - Single Deployment Unit", False, "Modules appear to be deployed separately")
+        except Exception as e:
+            self.log_result("Modular Architecture - Single Deployment Unit", False, f"Error: {str(e)}")
+    
     def test_error_cases(self):
         """Test error handling"""
         print("\n=== Testing Error Cases ===")
@@ -372,6 +576,16 @@ class YouTubeCloneAPITester:
                 self.log_result("Error handling - Invalid login", False, f"Expected 401, got {response.status_code}")
         except Exception as e:
             self.log_result("Error handling - Invalid login", False, f"Error: {str(e)}")
+        
+        # Test invalid OAuth provider
+        try:
+            response = self.make_request("GET", "/oauth/invalid-provider/login", params={"redirect_uri": "https://example.com"})
+            if response.status_code == 400:
+                self.log_result("Error handling - Invalid OAuth provider", True, "Correctly returned 400")
+            else:
+                self.log_result("Error handling - Invalid OAuth provider", False, f"Expected 400, got {response.status_code}")
+        except Exception as e:
+            self.log_result("Error handling - Invalid OAuth provider", False, f"Error: {str(e)}")
     
     def run_all_tests(self):
         """Run all tests"""

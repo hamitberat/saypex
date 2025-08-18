@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import VideoCard from '../components/VideoCard';
 import { Button } from '../components/ui/button';
-import { Filter, Search } from 'lucide-react';
+import { Filter, Search, SlidersHorizontal } from 'lucide-react';
 import { videoApi, handleApiError } from '../services/api';
 
 const SearchResults = ({ sidebarOpen }) => {
@@ -15,9 +15,9 @@ const SearchResults = ({ sidebarOpen }) => {
 
   const sortOptions = [
     { value: 'relevance', label: 'Relevance' },
-    { value: 'upload_date', label: 'Upload date' },
-    { value: 'view_count', label: 'View count' },
-    { value: 'rating', label: 'Rating' },
+    { value: 'date', label: 'Upload date' },
+    { value: 'views', label: 'View count' },
+    { value: 'likes', label: 'Rating' },
   ];
 
   const filterOptions = [
@@ -40,7 +40,7 @@ const SearchResults = ({ sidebarOpen }) => {
           };
           
           const searchResults = await videoApi.searchVideos(params);
-          setResults(searchResults);
+          setResults(searchResults || []);
         } catch (error) {
           console.error('Search error:', handleApiError(error));
           setResults([]);
@@ -60,14 +60,14 @@ const SearchResults = ({ sidebarOpen }) => {
           <div className="space-y-4">
             {[...Array(8)].map((_, index) => (
               <div key={index} className="animate-pulse flex space-x-4">
-                <div className="w-80 h-48 bg-gray-200 rounded-lg flex-shrink-0"></div>
+                <div className="w-80 h-48 bg-gradient-to-br from-purple-100 to-blue-100 rounded-lg flex-shrink-0"></div>
                 <div className="flex-1">
-                  <div className="h-6 bg-gray-200 rounded mb-3"></div>
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+                  <div className="h-6 bg-purple-200 rounded mb-3"></div>
+                  <div className="h-4 bg-purple-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-purple-200 rounded w-1/2 mb-4"></div>
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-                    <div className="h-4 bg-gray-200 rounded w-24"></div>
+                    <div className="w-8 h-8 bg-purple-200 rounded-full"></div>
+                    <div className="h-4 bg-purple-200 rounded w-24"></div>
                   </div>
                 </div>
               </div>
@@ -84,8 +84,9 @@ const SearchResults = ({ sidebarOpen }) => {
         {/* Search Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-4">
-            <h1 className="text-lg font-medium">
-              About {results.length.toLocaleString()} results for "{query}"
+            <h1 className="text-lg font-medium text-gray-800">
+              About {results.length.toLocaleString()} results for 
+              <span className="text-purple-600 font-semibold"> "{query}"</span>
             </h1>
           </div>
           <div className="flex items-center space-x-2">
@@ -93,15 +94,19 @@ const SearchResults = ({ sidebarOpen }) => {
               variant="ghost"
               size="sm"
               onClick={() => setFilterOpen(!filterOpen)}
-              className="flex items-center space-x-2"
+              className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-200 ${
+                filterOpen 
+                  ? 'bg-purple-100 text-purple-700' 
+                  : 'hover:bg-purple-50 text-gray-700'
+              }`}
             >
-              <Filter className="w-4 h-4" />
+              <SlidersHorizontal className="w-4 h-4" />
               <span>Filters</span>
             </Button>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-purple-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 bg-white"
             >
               {sortOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -114,15 +119,18 @@ const SearchResults = ({ sidebarOpen }) => {
 
         {/* Filters Panel */}
         {filterOpen && (
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 mb-6 border border-purple-100">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {filterOptions.map((filter) => (
                 <div key={filter.label}>
-                  <h3 className="font-medium text-sm mb-2">{filter.label}</h3>
-                  <div className="space-y-1">
+                  <h3 className="font-medium text-sm mb-3 text-purple-700">{filter.label}</h3>
+                  <div className="space-y-2">
                     {filter.options.map((option) => (
-                      <label key={option} className="flex items-center space-x-2 text-sm">
-                        <input type="checkbox" className="rounded" />
+                      <label key={option} className="flex items-center space-x-2 text-sm cursor-pointer hover:text-purple-600 transition-colors">
+                        <input 
+                          type="checkbox" 
+                          className="rounded border-purple-300 text-purple-600 focus:ring-purple-200" 
+                        />
                         <span>{option}</span>
                       </label>
                     ))}
@@ -135,48 +143,56 @@ const SearchResults = ({ sidebarOpen }) => {
 
         {/* Search Results */}
         {results.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12">
-            <Search className="w-12 h-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-700 mb-2">No results found</h3>
-            <p className="text-gray-500 text-center max-w-md">
-              Try different keywords or remove search filters
+          <div className="flex flex-col items-center justify-center py-16">
+            <div className="w-24 h-24 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full flex items-center justify-center mb-6">
+              <Search className="w-12 h-12 text-purple-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No results found</h3>
+            <p className="text-gray-500 text-center max-w-md mb-6">
+              Try different keywords or remove search filters to find more videos
             </p>
+            <Button 
+              onClick={() => window.location.href = '/'}
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-full px-6 py-2"
+            >
+              Browse All Videos
+            </Button>
           </div>
         ) : (
           <div className="space-y-6">
             {results.map((video) => (
-              <div key={video.id} className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 p-2 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+              <div key={video.id} className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 p-4 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 rounded-xl transition-all duration-200 group">
                 <div className="flex-shrink-0">
                   <div className="relative w-full lg:w-80 aspect-video">
                     <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="w-full h-full object-cover rounded-lg"
+                      src={video.thumbnails?.[0]?.url || video.thumbnail || '/placeholder-thumbnail.jpg'}
+                      alt={video.title || 'Video thumbnail'}
+                      className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-200"
                     />
-                    <div className="absolute bottom-2 right-2 bg-black bg-opacity-90 text-white text-xs px-2 py-1 rounded font-medium">
-                      {video.duration}
+                    <div className="absolute bottom-2 right-2 bg-black/90 text-white text-xs px-2 py-1 rounded font-medium">
+                      {video.duration || '0:00'}
                     </div>
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-lg line-clamp-2 mb-2 cursor-pointer hover:text-blue-600 transition-colors">
-                    {video.title}
+                  <h3 className="font-semibold text-lg line-clamp-2 mb-2 cursor-pointer hover:text-purple-600 transition-colors text-gray-800">
+                    {video.title || 'Untitled Video'}
                   </h3>
                   <div className="text-sm text-gray-600 mb-2">
-                    {video.views} views • {video.uploadTime}
+                    {video.metrics?.views || video.views || 0} views • {video.upload_time || 'Recently'}
                   </div>
                   <div className="flex items-center space-x-3 mb-3">
                     <img
-                      src={video.channelAvatar}
-                      alt={video.channelName}
-                      className="w-6 h-6 rounded-full object-cover"
+                      src={video.channel_avatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=24&h=24&fit=crop&crop=face'}
+                      alt={video.channel_name || 'Channel'}
+                      className="w-6 h-6 rounded-full object-cover ring-1 ring-purple-200"
                     />
-                    <span className="text-sm text-gray-700 hover:text-gray-900 cursor-pointer">
-                      {video.channelName}
+                    <span className="text-sm text-purple-600 hover:text-purple-700 cursor-pointer font-medium">
+                      {video.channel_name || 'Unknown Channel'}
                     </span>
                   </div>
                   <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
-                    {video.description}
+                    {video.description || 'No description available.'}
                   </p>
                 </div>
               </div>

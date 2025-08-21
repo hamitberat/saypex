@@ -44,8 +44,13 @@ const Sidebar = ({ isOpen, isMobile }) => {
 
   const isActive = (path) => location.pathname === path;
 
-  const handleNavigation = (path) => {
-    navigate(path);
+  const handleNavigation = (path, category = null) => {
+    if (category) {
+      // Navigate to home with category filter
+      navigate(`/?category=${category}`);
+    } else {
+      navigate(path);
+    }
   };
 
   if (!isOpen && isMobile) return null;

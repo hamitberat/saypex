@@ -13,7 +13,7 @@ const Header = ({ onToggleSidebar, sidebarOpen }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      navigate(`/search?search_query=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 

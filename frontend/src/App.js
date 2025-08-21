@@ -82,7 +82,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Home sidebarOpen={sidebarOpen} />} />
                   <Route path="/watch" element={<Watch sidebarOpen={sidebarOpen} />} />
-                  <Route path="/results" element={<SearchResults sidebarOpen={sidebarOpen} />} />
+                  <Route path="/search" element={<SearchResults sidebarOpen={sidebarOpen} />} />
                   <Route path="/trending" element={<Trending sidebarOpen={sidebarOpen} />} />
                   <Route path="/explore" element={<Home sidebarOpen={sidebarOpen} />} />
                   <Route path="/shorts" element={<Home sidebarOpen={sidebarOpen} />} />

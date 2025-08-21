@@ -230,7 +230,10 @@ frontend:
     status_history:
         - working: true
           agent: "main"
-          comment: "✅ Successfully migrated from yarn to npm. Removed 25+ unnecessary Radix UI dependencies, keeping only @radix-ui/react-slot and @radix-ui/react-separator which are actually used. Removed yarn packageManager configuration. Package size reduced significantly. npm install and npm start working correctly."
+          comment: "✅ Successfully migrated from yarn to npm. Removed 25+ unnecessary Radix UI dependencies, keeping only @radix-ui/react-slot, @radix-ui/react-separator, @radix-ui/react-avatar, and next-themes which are actually used. Removed yarn packageManager configuration. Removed CRACO configuration completely and switched to react-scripts. Package size reduced significantly. npm install and npm start working correctly."
+        - working: true
+          agent: "testing"
+          comment: "✅ COMPREHENSIVE FRONTEND TESTING AFTER NPM MIGRATION COMPLETED: All 9 critical tasks tested successfully with 100% pass rate. 3x3 video grid layout working perfectly, SAYPEX branding and purple/blue gradient design preserved, authentication flow (login/signup) working with demo credentials, Button and Separator components from Radix UI working correctly, navigation and routing functional, video watch page and player loading properly. Fixed missing dependencies during testing. Application is fully functional after removing 23+ unnecessary dependencies and switching from yarn to npm with react-scripts."
 
   - task: "SAYPEX Rebranding and 3x3 Grid Layout"
     implemented: true

@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: Test the SAYPEX video platform (transformed from YouTube clone) with complete authentication system, 3x3 video grid layout, and all functionality working properly. The application should be working at http://localhost:3000 with features including home page video loading with 3x3 grid, authentication (login/signup), video player functionality, and SAYPEX branding. UPDATED: Test the advanced SAYPEX backend features following MODULAR MONOLITH architecture with focus on Upload Module, OAuth Module, 2FA Module, Security Module Integration, and Service Layer Testing.
+user_problem_statement: Convert SAYPEX video platform to use npm instead of yarn and remove unnecessary Radix UI dependencies while preserving all functionality. Remove yarn configuration completely and ensure the application works with npm package manager.
 
 backend:
   - task: "Authentication System (Login/Signup API)"

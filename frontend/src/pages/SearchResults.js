@@ -184,7 +184,7 @@ const SearchResults = ({ sidebarOpen }) => {
                       className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-200"
                     />
                     <div className="absolute bottom-2 right-2 bg-black/90 text-white text-xs px-2 py-1 rounded font-medium">
-                      {video.duration || '0:00'}
+                      {formatDuration(video.duration_seconds) || video.duration || '0:00'}
                     </div>
                   </div>
                 </div>

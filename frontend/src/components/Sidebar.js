@@ -137,14 +137,14 @@ const Sidebar = ({ isOpen, isMobile }) => {
               <div className="px-3 py-2 text-sm font-medium text-purple-700">Explore</div>
               {exploreItems.map((item) => (
                 <Button
-                  key={item.path}
+                  key={item.path + (item.category || '')}
                   variant="ghost"
                   className={`w-full justify-start px-3 py-2 mb-1 h-10 transition-all duration-200 ${
                     isActive(item.path) 
                       ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 font-medium border-r-2 border-purple-500' 
                       : 'hover:bg-purple-50 text-gray-700'
                   }`}
-                  onClick={() => handleNavigation(item.path)}
+                  onClick={() => handleNavigation(item.path, item.category)}
                 >
                   <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive(item.path) ? 'text-purple-600' : ''}`} />
                   <span className="ml-6 text-sm">{item.label}</span>

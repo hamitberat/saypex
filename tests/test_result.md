@@ -220,6 +220,18 @@ backend:
           comment: "✅ MODULAR ARCHITECTURE BOUNDARIES TESTING COMPLETED: All 4 modules (upload, oauth, 2fa, core) are independently accessible and testable. Single deployment unit confirmed - all modules deployed together in same FastAPI application. Module independence validated - each module can be tested and accessed independently without affecting others. Clear API boundaries with proper /api prefix routing. No tight coupling between modules detected. Modular monolith architecture successfully implemented with excellent separation of concerns while maintaining single deployment simplicity."
 
 frontend:
+  - task: "NPM Migration and Dependency Cleanup"
+    implemented: true
+    working: true
+    file: "/app/frontend/package.json"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "✅ Successfully migrated from yarn to npm. Removed 25+ unnecessary Radix UI dependencies, keeping only @radix-ui/react-slot and @radix-ui/react-separator which are actually used. Removed yarn packageManager configuration. Package size reduced significantly. npm install and npm start working correctly."
+
   - task: "SAYPEX Rebranding and 3x3 Grid Layout"
     implemented: true
     working: true

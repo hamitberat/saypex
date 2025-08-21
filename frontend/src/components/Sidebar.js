@@ -29,12 +29,12 @@ const Sidebar = ({ isOpen, isMobile }) => {
   ] : [];
 
   const exploreItems = [
-    { icon: Music, label: 'Music', path: '/music' },
-    { icon: Gamepad2, label: 'Gaming', path: '/gaming' },
-    { icon: Trophy, label: 'Sports', path: '/sports' },
-    { icon: Film, label: 'Movies', path: '/movies' },
-    { icon: Lightbulb, label: 'Learning', path: '/learning' },
-    { icon: Shirt, label: 'Fashion & Beauty', path: '/fashion' },
+    { icon: Music, label: 'Music', path: '/', category: 'music' },
+    { icon: Gamepad2, label: 'Gaming', path: '/', category: 'gaming' },
+    { icon: Trophy, label: 'Sports', path: '/', category: 'sports' },
+    { icon: Film, label: 'Movies', path: '/', category: 'movies' },
+    { icon: Lightbulb, label: 'Learning', path: '/', category: 'learning' },
+    { icon: Shirt, label: 'Fashion & Beauty', path: '/', category: 'fashion' },
   ];
 
   const settingsItems = [

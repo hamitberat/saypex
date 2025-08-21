@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: Convert SAYPEX video platform to use npm instead of yarn and remove unnecessary Radix UI dependencies while preserving all functionality. Remove yarn configuration completely and ensure the application works with npm package manager.
+user_problem_statement: Implement enhanced SAYPEX functionality: (1) Fix search bar to actually search video content, (2) Fix time display format to show hours:minutes:seconds for videos longer than 60 minutes, and (3) Fix sidebar category navigation to filter videos like the top navigation categories do.
 
 backend:
   - task: "Authentication System (Login/Signup API)"

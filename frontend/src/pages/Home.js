@@ -21,6 +21,19 @@ const Home = ({ sidebarOpen }) => {
     { name: 'Movies', icon: Film },
   ];
 
+  // Check for category parameter from URL (sidebar navigation)
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam) {
+      // Capitalize first letter to match category names
+      const categoryName = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1);
+      const validCategory = categories.find(cat => cat.name.toLowerCase() === categoryParam);
+      if (validCategory) {
+        setSelectedCategory(validCategory.name);
+      }
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     // Load videos from API
     const loadVideos = async () => {

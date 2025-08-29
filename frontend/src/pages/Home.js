@@ -26,10 +26,13 @@ const Home = ({ sidebarOpen }) => {
     if (categoryParam) {
       // Capitalize first letter to match category names
       const categoryName = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1);
-      const validCategory = categories.find(cat => cat.name.toLowerCase() === categoryParam);
+      const validCategory = categories.find(cat => cat.name.toLowerCase() === categoryParam.toLowerCase());
       if (validCategory) {
         setSelectedCategory(validCategory.name);
       }
+    } else {
+      // If no category parameter, set to All
+      setSelectedCategory('All');
     }
   }, [searchParams]);
 

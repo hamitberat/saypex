@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import VideoCard from '../components/VideoCard';
 import { videoApi, handleApiError } from '../services/api';
 import { Button } from '../components/ui/button';
-import { Flame, Music, Gamepad2, Trophy, Lightbulb, Film, Sparkles } from 'lucide-react';
+import { Flame, Gamepad2, ChefHat, Coffee, Calendar, Sparkles } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 const Home = ({ sidebarOpen }) => {

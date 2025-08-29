@@ -8,6 +8,7 @@ import { authHelpers } from '../services/api';
 const Sidebar = ({ isOpen, isMobile }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const currentUser = authHelpers.getCurrentUser();
 
   const mainMenuItems = [

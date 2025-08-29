@@ -73,9 +73,13 @@ const Sidebar = ({ isOpen, isMobile }) => {
   if (!isOpen && isMobile) return null;
 
   return (
-    <aside className={`fixed left-0 top-14 h-[calc(100vh-56px)] bg-white border-r border-purple-100 z-40 transition-all duration-300 overflow-y-auto ${
-      isOpen ? 'w-60' : 'w-16'
-    } ${isMobile ? 'shadow-lg' : ''}`}>
+    <aside className={`fixed left-0 top-14 h-[calc(100vh-56px)] bg-white border-r border-purple-100 z-40 transition-all duration-300 ease-in-out overflow-y-auto ${
+      isOpen 
+        ? 'w-60 translate-x-0' 
+        : isMobile 
+          ? 'w-60 -translate-x-full' 
+          : 'w-16 translate-x-0'
+    } ${isMobile ? 'shadow-xl' : 'shadow-sm'}`}>
       <div className="py-2">
         {/* Main Menu */}
         <div className="px-2">

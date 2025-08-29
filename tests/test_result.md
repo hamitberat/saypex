@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: Implement enhanced SAYPEX functionality: (1) Fix search bar to actually search video content, (2) Fix time display format to show hours:minutes:seconds for videos longer than 60 minutes, and (3) Fix sidebar category navigation to filter videos like the top navigation categories do.
+user_problem_statement: Update SAYPEX video platform category navigation system. Change categories from Music, Gaming, Sports, Learning to Trending, Gaming, Cooking, Mukbang, Daily in both horizontal navigation (top buttons) and vertical navigation (sidebar). Ensure both navigation methods are synchronized and functional.
 
 backend:
   - task: "Authentication System (Login/Signup API)"

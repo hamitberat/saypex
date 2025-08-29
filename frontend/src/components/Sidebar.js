@@ -42,7 +42,21 @@ const Sidebar = ({ isOpen, isMobile }) => {
     { icon: HelpCircle, label: 'Help', path: '/help' },
   ];
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path, category = null) => {
+    if (category) {
+      // For category-based items, check if we're on home page with the right category
+      const currentCategory = searchParams.get('category');
+      return location.pathname === '/' && currentCategory === category;
+    }
+    
+    // For regular items, check path match
+    if (path === '/') {
+      // Home is active when on root path with no category parameters
+      return location.pathname === '/' && !searchParams.get('category');
+    }
+    
+    return location.pathname === path;
+  };
 
   const handleNavigation = (path, category = null) => {
     if (category) {

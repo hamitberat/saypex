@@ -3,10 +3,11 @@ import VideoCard from '../components/VideoCard';
 import { videoApi, handleApiError } from '../services/api';
 import { Button } from '../components/ui/button';
 import { Flame, Gamepad2, ChefHat, Coffee, Calendar, Sparkles } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 const Home = ({ sidebarOpen }) => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [videos, setVideos] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [loading, setLoading] = useState(true);

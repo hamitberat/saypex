@@ -47,9 +47,15 @@ const Header = ({ onToggleSidebar, sidebarOpen }) => {
             variant="ghost"
             size="sm"
             onClick={onToggleSidebar}
-            className="p-2 hover:bg-purple-50 rounded-lg"
+            className={`p-2 rounded-lg transition-all duration-200 ${
+              sidebarOpen 
+                ? 'bg-purple-100 hover:bg-purple-150 text-purple-800' 
+                : 'hover:bg-purple-50 text-purple-700'
+            }`}
           >
-            <Menu className="w-6 h-6 text-purple-700" />
+            <Menu className={`w-6 h-6 transition-transform duration-200 ${
+              sidebarOpen ? 'rotate-90' : 'rotate-0'
+            }`} />
           </Button>
           
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">

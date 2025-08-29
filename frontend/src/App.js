@@ -59,7 +59,8 @@ function App() {
           <Route path="/*" element={
             <>
               <Header 
-                onMenuClick={handleMenuClick}
+                onToggleSidebar={handleMenuClick}
+                sidebarOpen={sidebarOpen}
                 onSearch={handleSearch}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}

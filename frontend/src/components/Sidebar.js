@@ -70,7 +70,7 @@ const Sidebar = ({ isOpen, isMobile }) => {
     }
   };
 
-  if (!isOpen && isMobile) return null;
+  // Always render sidebar for animation, but position it off-screen when closed on mobile
 
   return (
     <aside className={`fixed left-0 top-14 h-[calc(100vh-56px)] bg-white border-r border-purple-100 z-40 transition-all duration-300 ease-in-out overflow-y-auto ${

@@ -14,11 +14,10 @@ const Home = ({ sidebarOpen }) => {
   const categories = [
     { name: 'All', icon: Sparkles },
     { name: 'Trending', icon: Flame },
-    { name: 'Music', icon: Music },
     { name: 'Gaming', icon: Gamepad2 },
-    { name: 'Sports', icon: Trophy },
-    { name: 'Learning', icon: Lightbulb },
-    { name: 'Movies', icon: Film },
+    { name: 'Cooking', icon: ChefHat },
+    { name: 'Mukbang', icon: Coffee },
+    { name: 'Daily', icon: Calendar },
   ];
 
   // Check for category parameter from URL (sidebar navigation)

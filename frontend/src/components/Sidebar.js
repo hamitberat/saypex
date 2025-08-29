@@ -47,6 +47,9 @@ const Sidebar = ({ isOpen, isMobile }) => {
     if (category) {
       // Navigate to home with category filter
       navigate(`/?category=${category}`);
+    } else if (path === '/') {
+      // Navigate to home and clear any category parameters
+      navigate('/', { replace: true });
     } else {
       navigate(path);
     }

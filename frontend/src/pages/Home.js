@@ -62,6 +62,15 @@ const Home = ({ sidebarOpen }) => {
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+    
+    // Update URL parameters
+    if (category === 'All') {
+      // Clear category parameter when "All" is selected
+      navigate('/', { replace: true });
+    } else {
+      // Set category parameter for other categories
+      navigate(`/?category=${category.toLowerCase()}`, { replace: true });
+    }
   };
 
   if (loading) {

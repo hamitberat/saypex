@@ -430,25 +430,140 @@ const Watch = () => {
             </Button>
           </div>
 
-          {/* Comments */}
-          <CommentSection videoId={videoId} />
+          {/* Comments Section */}
+          <div className="mt-6">
+            <CommentSection videoId={videoId} />
+          </div>
+
+          {/* Recommended Videos - Below main content */}
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">Recommended Videos</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {recommendedVideos.length > 0 ? (
+                recommendedVideos.map((recommendedVideo) => (
+                  <VideoCard
+                    key={recommendedVideo.id}
+                    video={recommendedVideo}
+                    layout="grid"
+                  />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-8 text-gray-500">
+                  <div className="text-4xl mb-2">🎬</div>
+                  <p>No recommendations available</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* Sidebar - Recommended Videos */}
-        <div className="lg:w-80 xl:w-96">
-          <div className="space-y-3">
-            {recommendedVideos.length > 0 ? (
-              recommendedVideos.map((recommendedVideo) => (
-                <VideoCard
-                  key={recommendedVideo.id}
-                  video={recommendedVideo}
-                  layout="list"
-                />
-              ))
+        {/* Right Sidebar - Comments */}
+        <div className="xl:w-96 xl:max-w-md">
+          <div className="bg-white border border-gray-200 rounded-xl p-4">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center">
+              💬 Comments
+              <span className="ml-2 text-sm font-normal text-gray-500">
+                ({formatNumber(video.metrics?.comments || 0)})
+              </span>
+            </h3>
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {/* Mock Comments for Demo */}
+              {[
+                {
+                  id: 1,
+                  author: "CodeMaster99",
+                  avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face",
+                  content: "Excellent tutorial! This really helped me understand the concepts better. Thanks for the clear explanations.",
+                  time: "2 hours ago",
+                  likes: 24
+                },
+                {
+                  id: 2, 
+                  author: "WebDevPro",
+                  avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b1c5?w=32&h=32&fit=crop&crop=face", 
+                  content: "Could you make a follow-up video on advanced deployment strategies? This was really helpful!",
+                  time: "5 hours ago",
+                  likes: 12
+                },
+                {
+                  id: 3,
+                  author: "ReactFan2024",
+                  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face",
+                  content: "The part about state management was particularly useful. Keep up the great work! 👍",
+                  time: "8 hours ago", 
+                  likes: 18
+                },
+                {
+                  id: 4,
+                  author: "LearningDev", 
+                  avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face",
+                  content: "I was struggling with this concept for weeks. Your explanation made it click instantly!",
+                  time: "1 day ago",
+                  likes: 31
+                }
+              ].map((comment) => (
+                <div key={comment.id} className="flex space-x-3">
+                  <img 
+                    src={comment.avatar}
+                    alt={comment.author}
+                    className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center space-x-2">
+                      <span className="font-medium text-sm text-gray-900">{comment.author}</span>
+                      <span className="text-xs text-gray-500">{comment.time}</span>
+                    </div>
+                    <p className="text-sm text-gray-700 mt-1 leading-relaxed">{comment.content}</p>
+                    <div className="flex items-center space-x-4 mt-2">
+                      <button className="flex items-center space-x-1 text-xs text-gray-500 hover:text-purple-600 transition-colors">
+                        <ThumbsUp className="w-3 h-3" />
+                        <span>{comment.likes}</span>
+                      </button>
+                      <button className="text-xs text-gray-500 hover:text-purple-600 transition-colors">
+                        Reply
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Add Comment */}
+            {currentUser ? (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm font-medium">
+                      {currentUser.username?.[0]?.toUpperCase() || 'U'}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <textarea
+                      placeholder="Add a comment..."
+                      className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      rows={3}
+                    />
+                    <div className="flex justify-end mt-2 space-x-2">
+                      <Button size="sm" variant="ghost" className="text-gray-600">
+                        Cancel
+                      </Button>
+                      <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white">
+                        Comment
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ) : (
-              <div className="text-center py-8 text-gray-500">
-                <div className="text-4xl mb-2">🎬</div>
-                <p>No recommendations available</p>
+              <div className="mt-4 pt-4 border-t border-gray-100 text-center">
+                <p className="text-sm text-gray-500 mb-2">Sign in to leave a comment</p>
+                <Button 
+                  size="sm" 
+                  onClick={() => navigate('/login')}
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+                >
+                  Sign In
+                </Button>
               </div>
             )}
           </div>

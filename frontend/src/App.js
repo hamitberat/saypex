@@ -15,8 +15,6 @@ import { Toaster } from './components/ui/sonner';
 import './App.css';
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {

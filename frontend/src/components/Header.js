@@ -75,10 +75,14 @@ const Header = ({ sidebarOpen }) => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleSearch(e);
+                    }
+                  }}
                   placeholder="Search videos, channels..."
-                  className="w-full px-4 py-2 pr-12 border border-purple-200 rounded-l-full focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-200 bg-white"
+                  className="w-full px-4 py-2 pr-4 border border-purple-200 rounded-l-full focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-200 bg-white"
                 />
-                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-400" />
               </div>
               <Button
                 type="submit"

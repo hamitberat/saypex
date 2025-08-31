@@ -116,12 +116,12 @@ const Header = ({ sidebarOpen }) => {
                 </span>
               </Button>
 
-              {/* User Menu */}
-              <div className="relative group">
+              {/* Profile Dropdown */}
+              <div className="relative">
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={handleProfileClick}
+                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                   className="flex items-center space-x-2 p-1 hover:bg-purple-50 rounded-lg"
                 >
                   <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
@@ -130,60 +130,106 @@ const Header = ({ sidebarOpen }) => {
                   <span className="hidden md:block text-sm font-medium text-gray-700">
                     {currentUser?.username || 'User'}
                   </span>
+                  <ChevronDown className="w-4 h-4 text-gray-500" />
                 </Button>
 
-                {/* Dropdown Menu */}
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <div className="py-2">
-                    <button
-                      onClick={handleProfileClick}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors"
-                    >
-                      <User className="w-4 h-4 inline mr-2" />
-                      Your Channel
-                    </button>
-                    <button
-                      onClick={() => navigate('/settings')}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors"
-                    >
-                      ⚙️ Settings
-                    </button>
-                    <button
-                      onClick={() => navigate('/settings/2fa')}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors"
-                    >
-                      🔐 Security (2FA)
-                    </button>
-                    <hr className="my-2" />
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                    >
-                      🚪 Sign Out
-                    </button>
+                {/* Profile Dropdown Menu */}
+                {profileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                    <div className="py-2">
+                      {/* User Info Section */}
+                      <div className="px-4 py-3 border-b border-gray-100">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                            <User className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-gray-900">{currentUser?.username || 'User'}</div>
+                            <div className="text-sm text-gray-500">{currentUser?.email}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Menu Options */}
+                      <button
+                        onClick={() => {
+                          navigate(`/channel/${currentUser?.username}`);
+                          setProfileMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors flex items-center"
+                      >
+                        <User className="w-4 h-4 mr-3" />
+                        Your Channel
+                      </button>
+                      <button
+                        onClick={() => {
+                          navigate('/settings');
+                          setProfileMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors"
+                      >
+                        ⚙️ Settings
+                      </button>
+                      <button
+                        onClick={() => {
+                          navigate('/settings/2fa');
+                          setProfileMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors"
+                      >
+                        🔐 Security (2FA)
+                      </button>
+                      <hr className="my-2" />
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setProfileMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                      >
+                        🚪 Sign Out
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </>
           ) : (
-            <div className="flex items-center space-x-2">
-              <Link to="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="px-4 py-2 border-purple-200 text-purple-700 hover:bg-purple-50 rounded-full"
-                >
-                  Sign In
-                </Button>
-              </Link>
-              <Link to="/signup">
-                <Button
-                  size="sm"
-                  className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-full"
-                >
-                  Sign Up
-                </Button>
-              </Link>
+            /* Profile Dropdown for Non-Authenticated Users */
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                className="flex items-center space-x-2 p-2 hover:bg-purple-50 rounded-lg"
+              >
+                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                  <User className="w-4 h-4 text-gray-600" />
+                </div>
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+              </Button>
+
+              {/* Non-Auth Dropdown Menu */}
+              {profileMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  <div className="py-2">
+                    <Link to="/login" onClick={() => setProfileMenuOpen(false)}>
+                      <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors">
+                        🔑 Sign In
+                      </button>
+                    </Link>
+                    <Link to="/signup" onClick={() => setProfileMenuOpen(false)}>
+                      <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors">
+                        ✨ Sign Up
+                      </button>
+                    </Link>
+                    <hr className="my-2" />
+                    <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors">
+                      ❓ Help
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

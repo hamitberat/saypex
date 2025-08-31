@@ -44,26 +44,26 @@ function App() {
 
               <main className="min-h-screen">
                 <Routes>
-                  <Route path="/" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/watch" element={<Watch sidebarOpen={sidebarOpen} />} />
-                  <Route path="/search" element={<SearchResults sidebarOpen={sidebarOpen} />} />
-                  <Route path="/trending" element={<Trending sidebarOpen={sidebarOpen} />} />
-                  <Route path="/explore" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/shorts" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/subscriptions" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/history" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/liked" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/music" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/gaming" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/sports" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/movies" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/learning" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/fashion" element={<Home sidebarOpen={sidebarOpen} />} />
-                  <Route path="/channel/:channelName" element={<Home sidebarOpen={sidebarOpen} />} />
+                  <Route path="/" element={<Home />} />
+                  <Route path="/watch" element={<Watch />} />
+                  <Route path="/search" element={<SearchResults />} />
+                  <Route path="/trending" element={<Trending />} />
+                  <Route path="/explore" element={<Home />} />
+                  <Route path="/shorts" element={<Home />} />
+                  <Route path="/subscriptions" element={<Home />} />
+                  <Route path="/history" element={<Home />} />
+                  <Route path="/liked" element={<Home />} />
+                  <Route path="/music" element={<Home />} />
+                  <Route path="/gaming" element={<Home />} />
+                  <Route path="/sports" element={<Home />} />
+                  <Route path="/movies" element={<Home />} />
+                  <Route path="/learning" element={<Home />} />
+                  <Route path="/fashion" element={<Home />} />
+                  <Route path="/channel/:channelName" element={<Home />} />
                   <Route path="/upload" element={<Upload />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/settings/2fa" element={<TFASettings />} />
-                  <Route path="/help" element={<Home sidebarOpen={sidebarOpen} />} />
+                  <Route path="/help" element={<Home />} />
                 </Routes>
               </main>
             </>

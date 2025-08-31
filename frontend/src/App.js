@@ -33,25 +33,14 @@ function App() {
           <Route path="/*" element={
             <>
               <Header 
-                onToggleSidebar={handleMenuClick}
-                sidebarOpen={sidebarOpen}
                 onSearch={handleSearch}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
               />
               
-              <Sidebar 
-                isOpen={sidebarOpen} 
-                isMobile={isMobile}
-              />
+              <Sidebar />
               
-              {/* Mobile overlay */}
-              {isMobile && sidebarOpen && (
-                <div 
-                  className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-                  onClick={handleOverlayClick}
-                />
-              )}
+              {/* Main Content with permanent sidebar space */}
 
               <main className="min-h-screen">
                 <Routes>

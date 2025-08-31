@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Compass, PlaySquare, Clock, ThumbsUp, Video, User, TrendingUp, Gamepad2, ChefHat, Coffee, Calendar, Plus, Users, Settings, HelpCircle } from 'lucide-react';
+import { Home, Compass, PlaySquare, Clock, ThumbsUp, Video, User, TrendingUp, Gamepad2, ChefHat, Coffee, Calendar, Users, Settings, HelpCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';

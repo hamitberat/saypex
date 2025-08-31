@@ -232,7 +232,7 @@ const Watch = () => {
 
   if (loading) {
     return (
-      <div className={`pt-14 transition-all duration-300 ${sidebarOpen ? 'ml-60' : 'ml-16'}`}>
+      <div className="pt-14 ml-16 transition-all duration-300">
         <div className="flex flex-col lg:flex-row gap-6 p-6">
           <div className="flex-1">
             <div className="aspect-video bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl mb-4 animate-pulse"></div>
@@ -257,9 +257,9 @@ const Watch = () => {
     );
   }
 
-  if (error || !video) {
+  if (error && !video) {
     return (
-      <div className={`pt-14 transition-all duration-300 ${sidebarOpen ? 'ml-60' : 'ml-16'}`}>
+      <div className="pt-14 ml-16 transition-all duration-300">
         <div className="flex justify-center items-center h-96">
           <div className="text-center">
             <div className="text-6xl text-purple-300 mb-4">📹</div>
@@ -277,10 +277,10 @@ const Watch = () => {
   }
 
   return (
-    <div className={`pt-14 transition-all duration-300 ${sidebarOpen ? 'ml-60' : 'ml-16'}`}>
-      <div className="flex flex-col lg:flex-row gap-6 p-6">
+    <div className="pt-14 ml-16 transition-all duration-300">
+      <div className="flex flex-col xl:flex-row gap-6 p-6">
         {/* Main Content */}
-        <div className="flex-1">
+        <div className="flex-1 max-w-5xl">
           {/* Video Player */}
           <div className="relative aspect-video bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden mb-4 group">
             {video.youtube_embed_url || video.video_url ? (

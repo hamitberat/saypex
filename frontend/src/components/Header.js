@@ -4,8 +4,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { authHelpers } from '../services/api';
 
-const Header = ({ onToggleSidebar, sidebarOpen }) => {
+const Header = ({ sidebarOpen }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const currentUser = authHelpers.getCurrentUser();
   const isAuthenticated = authHelpers.isAuthenticated();

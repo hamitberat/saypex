@@ -208,7 +208,7 @@ const Header = ({ sidebarOpen }) => {
             </>
           ) : (
             /* Profile Dropdown for Non-Authenticated Users */
-            <div className="relative">
+            <div className="relative profile-dropdown">
               <Button
                 variant="ghost"
                 size="sm"

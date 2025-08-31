@@ -22,7 +22,6 @@ const Sidebar = ({ isOpen, isMobile }) => {
     { icon: Video, label: 'Your videos', path: '/channel' },
     { icon: Clock, label: 'History', path: '/history' },
     { icon: ThumbsUp, label: 'Liked videos', path: '/liked' },
-    { icon: Plus, label: 'Upload Video', path: '/upload' },
   ] : [];
 
   const subscriptionItems = currentUser ? [

@@ -429,11 +429,6 @@ const Watch = () => {
             </Button>
           </div>
 
-          {/* Comments Section */}
-          <div className="mt-6">
-            <CommentSection videoId={videoId} />
-          </div>
-
           {/* Recommended Videos - Below main content */}
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-4 text-gray-900">Recommended Videos</h3>

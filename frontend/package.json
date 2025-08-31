@@ -22,7 +22,8 @@
   "scripts": {
     "start": "npx react-scripts start",
     "build": "npx react-scripts build",
-    "test": "npx react-scripts test"
+    "test": "npx react-scripts test",
+    "vercel-build": "npx react-scripts build"
   },
   "browserslist": {
     "production": [

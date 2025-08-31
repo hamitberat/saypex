@@ -70,146 +70,50 @@ const Sidebar = ({ isOpen, isMobile }) => {
     }
   };
 
-  // Always render sidebar for animation, but position it off-screen when closed on mobile
+  // Always render sidebar as icon-only permanent sidebar
 
   return (
-    <aside className={`fixed left-0 top-14 h-[calc(100vh-56px)] bg-white border-r border-purple-100 z-40 transition-all duration-300 ease-in-out overflow-y-auto ${
-      isOpen 
-        ? 'w-60 translate-x-0 opacity-100' 
-        : isMobile 
-          ? 'w-60 -translate-x-full opacity-90' 
-          : 'w-16 translate-x-0 opacity-100'
-    } ${isMobile ? 'shadow-xl backdrop-blur-sm' : 'shadow-sm'}`}>
+    <aside className="fixed left-0 top-14 h-[calc(100vh-56px)] bg-white border-r border-purple-100 z-40 overflow-y-auto w-16 shadow-sm">
       <div className="py-2">
-        {/* Main Menu */}
+        {/* Main Menu - Icons Only */}
         <div className="px-2">
           {mainMenuItems.map((item) => (
             <Button
               key={item.path}
               variant="ghost"
-              className={`w-full justify-start px-3 py-2 mb-1 h-10 transition-all duration-200 ${
+              className={`w-full justify-center px-3 py-2 mb-1 h-12 transition-all duration-200 ${
                 isActive(item.path) 
                   ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 font-medium border-r-2 border-purple-500' 
                   : 'hover:bg-purple-50 text-gray-700'
-              } ${!isOpen ? 'px-4 justify-center' : ''}`}
+              }`}
               onClick={() => handleNavigation(item.path)}
+              title={item.label}
             >
-              <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive(item.path) ? 'text-purple-600' : ''}`} />
-              {isOpen && <span className="ml-6 text-sm">{item.label}</span>}
+              <item.icon className={`w-6 h-6 flex-shrink-0 ${isActive(item.path) ? 'text-purple-600' : ''}`} />
             </Button>
           ))}
         </div>
 
-        {isOpen && (
+        {/* User Library - Icons Only */}
+        {currentUser && libraryItems.length > 0 && (
           <>
-            {/* Subscriptions */}
-            {currentUser && subscriptionItems.length > 0 && (
-              <>
-                <Separator className="my-3 bg-purple-100" />
-                <div className="px-2">
-                  {subscriptionItems.map((item) => (
-                    <Button
-                      key={item.path}
-                      variant="ghost"
-                      className={`w-full justify-start px-3 py-2 mb-1 h-10 transition-all duration-200 ${
-                        isActive(item.path) 
-                          ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 font-medium border-r-2 border-purple-500' 
-                          : 'hover:bg-purple-50 text-gray-700'
-                      }`}
-                      onClick={() => handleNavigation(item.path)}
-                    >
-                      <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive(item.path) ? 'text-purple-600' : ''}`} />
-                      <span className="ml-6 text-sm">{item.label}</span>
-                    </Button>
-                  ))}
-                </div>
-              </>
-            )}
-            
-            {/* Library */}
-            {currentUser && libraryItems.length > 0 && (
-              <>
-                <Separator className="my-3 bg-purple-100" />
-                <div className="px-2">
-                  <div className="px-3 py-2 text-sm font-medium text-purple-700">Library</div>
-                  {libraryItems.map((item) => (
-                    <Button
-                      key={item.path}
-                      variant="ghost"
-                      className={`w-full justify-start px-3 py-2 mb-1 h-10 transition-all duration-200 ${
-                        isActive(item.path) 
-                          ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 font-medium border-r-2 border-purple-500' 
-                          : 'hover:bg-purple-50 text-gray-700'
-                      }`}
-                      onClick={() => handleNavigation(item.path)}
-                    >
-                      <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive(item.path) ? 'text-purple-600' : ''}`} />
-                      <span className="ml-6 text-sm">{item.label}</span>
-                    </Button>
-                  ))}
-                </div>
-              </>
-            )}
-
             <Separator className="my-3 bg-purple-100" />
-
-            {/* Explore */}
             <div className="px-2">
-              <div className="px-3 py-2 text-sm font-medium text-purple-700">Explore</div>
-              {exploreItems.map((item) => (
-                <Button
-                  key={item.path + (item.category || '')}
-                  variant="ghost"
-                  className={`w-full justify-start px-3 py-2 mb-1 h-10 transition-all duration-200 ${
-                    isActive(item.path, item.category) 
-                      ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 font-medium border-r-2 border-purple-500' 
-                      : 'hover:bg-purple-50 text-gray-700'
-                  }`}
-                  onClick={() => handleNavigation(item.path, item.category)}
-                >
-                  <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive(item.path, item.category) ? 'text-purple-600' : ''}`} />
-                  <span className="ml-6 text-sm">{item.label}</span>
-                </Button>
-              ))}
-            </div>
-
-            <Separator className="my-3 bg-purple-100" />
-
-            {/* Settings */}
-            <div className="px-2">
-              {settingsItems.map((item) => (
+              {libraryItems.map((item) => (
                 <Button
                   key={item.path}
                   variant="ghost"
-                  className={`w-full justify-start px-3 py-2 mb-1 h-10 transition-all duration-200 ${
+                  className={`w-full justify-center px-3 py-2 mb-1 h-12 transition-all duration-200 ${
                     isActive(item.path) 
                       ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 font-medium border-r-2 border-purple-500' 
                       : 'hover:bg-purple-50 text-gray-700'
                   }`}
                   onClick={() => handleNavigation(item.path)}
+                  title={item.label}
                 >
-                  <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive(item.path) ? 'text-purple-600' : ''}`} />
-                  <span className="ml-6 text-sm">{item.label}</span>
+                  <item.icon className={`w-6 h-6 flex-shrink-0 ${isActive(item.path) ? 'text-purple-600' : ''}`} />
                 </Button>
               ))}
-            </div>
-
-            {/* Footer */}
-            <div className="px-5 py-4">
-              <div className="text-xs text-gray-500 leading-relaxed">
-                <div className="mb-2">
-                  <a href="#" className="hover:text-purple-600 transition-colors">About</a> • <a href="#" className="hover:text-purple-600 transition-colors">Press</a> • <a href="#" className="hover:text-purple-600 transition-colors">Copyright</a>
-                </div>
-                <div className="mb-2">
-                  <a href="#" className="hover:text-purple-600 transition-colors">Contact us</a> • <a href="#" className="hover:text-purple-600 transition-colors">Creators</a> • <a href="#" className="hover:text-purple-600 transition-colors">Advertise</a>
-                </div>
-                <div className="mb-2">
-                  <a href="#" className="hover:text-purple-600 transition-colors">Developers</a> • <a href="#" className="hover:text-purple-600 transition-colors">Terms</a> • <a href="#" className="hover:text-purple-600 transition-colors">Privacy</a>
-                </div>
-                <div className="text-purple-400 mt-4 font-medium">
-                  © 2025 Lotic
-                </div>
-              </div>
             </div>
           </>
         )}

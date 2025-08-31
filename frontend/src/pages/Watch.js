@@ -4,7 +4,6 @@ import { ThumbsUp, ThumbsDown, Share, Download, MoreHorizontal, Bell, Play, Sett
 import { Button } from '../components/ui/button';
 import { Separator } from '../components/ui/separator';
 import VideoCard from '../components/VideoCard';
-import CommentSection from '../components/CommentSection';
 import { videoApi, handleApiError, authHelpers } from '../services/api';
 
 const Watch = () => {

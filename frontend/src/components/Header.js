@@ -18,6 +18,18 @@ const Header = ({ sidebarOpen }) => {
     }
   };
 
+  // Close profile menu when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuOpen && !event.target.closest('.profile-dropdown')) {
+        setProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [profileMenuOpen]);
+
   const handleUploadClick = () => {
     if (isAuthenticated) {
       navigate('/upload');

@@ -75,13 +75,7 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className={`pt-14 transition-all duration-300 ${
-        isMobile 
-          ? '' // No left margin on mobile
-          : sidebarOpen 
-            ? 'ml-60' 
-            : 'ml-16'
-      }`}>
+      <div className="pt-14 ml-16 transition-all duration-300">
         <div className="p-6">
           {/* Category skeleton */}
           <div className="flex items-center space-x-3 p-4 overflow-x-auto scrollbar-hide mb-6">

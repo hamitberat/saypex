@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Upload, Bell, User, Menu, Video } from 'lucide-react';
+import { Search, Upload, Bell, User, Video, ChevronDown } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { authHelpers } from '../services/api';

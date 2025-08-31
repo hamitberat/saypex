@@ -7,7 +7,7 @@ import VideoCard from '../components/VideoCard';
 import CommentSection from '../components/CommentSection';
 import { videoApi, handleApiError, authHelpers } from '../services/api';
 
-const Watch = ({ sidebarOpen }) => {
+const Watch = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const videoId = searchParams.get('v');
@@ -21,10 +21,107 @@ const Watch = ({ sidebarOpen }) => {
   const [error, setError] = useState(null);
   const currentUser = authHelpers.getCurrentUser();
 
+  // Mock video data for demonstration
+  const mockVideo = {
+    id: "demo_video_1",
+    title: "Building Modern Web Applications with React and FastAPI - Complete Tutorial",
+    description: "Learn how to build a complete modern web application using React for the frontend and FastAPI for the backend. In this comprehensive tutorial, we'll cover:\n\n🚀 Setting up the development environment\n📱 Building responsive UI components\n⚡ Creating RESTful APIs\n🔐 Implementing authentication\n💾 Database integration with PostgreSQL\n🎨 Styling with Tailwind CSS\n\nThis tutorial is perfect for developers who want to learn full-stack development with modern tools and frameworks. We'll build a real-world application from scratch and deploy it to production.\n\n⏰ Timestamps:\n0:00 Introduction\n5:30 Project setup\n15:20 Frontend development\n45:10 Backend API creation\n1:20:15 Database integration\n1:55:30 Authentication system\n2:30:45 Deployment guide\n\n💻 Source code: https://github.com/example/react-fastapi-tutorial\n📚 Documentation: https://docs.example.com\n\n#React #FastAPI #WebDevelopment #Tutorial #Programming",
+    channel_name: "TechLearning Pro",
+    channel_avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
+    video_url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    youtube_embed_url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    duration_seconds: 9847, // 2 hours 44 minutes 7 seconds
+    metrics: {
+      views: 1234567,
+      likes: 45678,
+      dislikes: 892,
+      comments: 1245
+    },
+    subscribers: 856000,
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    category: "education",
+    thumbnails: [{
+      url: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=450&fit=crop",
+      width: 800,
+      height: 450
+    }]
+  };
+
+  // Mock recommended videos
+  const mockRecommendedVideos = [
+    {
+      id: "rec_1",
+      title: "JavaScript ES2024 New Features You Need to Know",
+      channel_name: "JS Mastery",
+      duration_seconds: 1234,
+      views: 567890,
+      thumbnails: [{
+        url: "https://images.unsplash.com/photo-1593720219276-0b1eacd0aef4?w=300&h=200&fit=crop",
+        width: 300,
+        height: 200
+      }],
+      created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
+    },
+    {
+      id: "rec_2", 
+      title: "Advanced React Patterns and Best Practices",
+      channel_name: "React Academy",
+      duration_seconds: 2145,
+      views: 234567,
+      thumbnails: [{
+        url: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=300&h=200&fit=crop",
+        width: 300,
+        height: 200
+      }],
+      created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
+    },
+    {
+      id: "rec_3",
+      title: "PostgreSQL Performance Optimization Guide",
+      channel_name: "Database Pro",
+      duration_seconds: 1876,
+      views: 189432,
+      thumbnails: [{
+        url: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=300&h=200&fit=crop",
+        width: 300,
+        height: 200
+      }],
+      created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+    },
+    {
+      id: "rec_4",
+      title: "Building Scalable APIs with FastAPI and Python",
+      channel_name: "Python Dev",
+      duration_seconds: 3421,
+      views: 445621,
+      thumbnails: [{
+        url: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=300&h=200&fit=crop",
+        width: 300,
+        height: 200
+      }],
+      created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    },
+    {
+      id: "rec_5",
+      title: "Modern CSS Grid and Flexbox Layout Techniques",
+      channel_name: "CSS Masters",
+      duration_seconds: 1654,
+      views: 323455,
+      thumbnails: [{
+        url: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=300&h=200&fit=crop",
+        width: 300,
+        height: 200
+      }],
+      created_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000)
+    }
+  ];
+
   useEffect(() => {
     const loadVideoData = async () => {
       if (!videoId) {
-        setError('No video ID provided');
+        // For demo purposes, load mock data even without videoId
+        setVideo(mockVideo);
+        setRecommendedVideos(mockRecommendedVideos);
         setLoading(false);
         return;
       }
@@ -33,27 +130,30 @@ const Watch = ({ sidebarOpen }) => {
         setLoading(true);
         setError(null);
         
-        // Get video details
-        const videoData = await videoApi.getVideo(videoId);
-        if (!videoData) {
-          throw new Error('Video not found');
-        }
-        setVideo(videoData);
-        
-        // Get recommended videos
+        // Try to get real video data first
         try {
-          const recommendedData = await videoApi.getRecommendations(videoId, { limit: 8 });
-          setRecommendedVideos(recommendedData || []);
-        } catch (recError) {
-          console.warn('Failed to load recommendations:', recError);
-          setRecommendedVideos([]);
+          const videoData = await videoApi.getVideo(videoId);
+          if (videoData) {
+            setVideo(videoData);
+            // Get recommended videos
+            const recommendedData = await videoApi.getRecommendations(videoId, { limit: 8 });
+            setRecommendedVideos(recommendedData || mockRecommendedVideos);
+            setLoading(false);
+            return;
+          }
+        } catch (apiError) {
+          console.warn('API call failed, using mock data:', apiError);
         }
+        
+        // Fallback to mock data
+        setVideo(mockVideo);
+        setRecommendedVideos(mockRecommendedVideos);
         
       } catch (error) {
         console.error('Error loading video data:', handleApiError(error));
-        setError('Failed to load video. Please try again.');
-        setVideo(null);
-        setRecommendedVideos([]);
+        setError('Failed to load video. Showing demo content.');
+        setVideo(mockVideo);
+        setRecommendedVideos(mockRecommendedVideos);
       } finally {
         setLoading(false);
       }

@@ -8,6 +8,7 @@ import SearchResults from './pages/SearchResults';
 import Trending from './pages/Trending';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Shorts from './pages/Shorts';
 import Upload from './pages/Upload';
 import Settings from './pages/Settings';
 import TFASettings from './pages/TFASettings';

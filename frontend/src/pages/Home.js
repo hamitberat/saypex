@@ -178,7 +178,7 @@ const Home = ({ sidebarOpen }) => {
               <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-blue-800 rounded-2xl p-8 text-white relative overflow-hidden">
                 <div className="absolute inset-0 bg-black/20"></div>
                 <div className="relative z-10">
-                  <h1 className="text-4xl font-bold mb-4">Welcome to SAYPEX</h1>
+                  <h1 className="text-4xl font-bold mb-4">Welcome to Lotic</h1>
                   <p className="text-lg text-purple-100 mb-6 max-w-2xl">
                     Discover amazing videos from creators around the world. Share your stories, connect with others, and explore endless entertainment.
                   </p>

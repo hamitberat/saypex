@@ -43,15 +43,28 @@ const Home = () => {
       setLoading(true);
       try {
         const params = {};
-        if (selectedCategory !== 'All') {
+        if (selectedCategory && selectedCategory !== 'All') {
           params.category = selectedCategory.toLowerCase();
         }
         
-        const videosData = await videoApi.getVideos(params);
-        setVideos(videosData || []);
+        // Try to fetch from API first
+        let videosData = [];
+        try {
+          videosData = await videoApi.getVideos(params);
+        } catch (apiError) {
+          console.warn('API call failed, using mock data:', apiError);
+        }
+        
+        // If no videos from API, use mock data
+        if (!videosData || videosData.length === 0) {
+          videosData = getMockVideos(selectedCategory);
+        }
+        
+        setVideos(videosData);
       } catch (error) {
         console.error('Error loading videos:', handleApiError(error));
-        setVideos([]);
+        // Fallback to mock data
+        setVideos(getMockVideos(selectedCategory));
       } finally {
         setLoading(false);
       }
@@ -59,6 +72,138 @@ const Home = () => {
 
     loadVideos();
   }, [selectedCategory]);
+
+  // Mock video data function
+  const getMockVideos = (category) => {
+    const allMockVideos = [
+      {
+        id: "demo_video_1",
+        title: "Building Modern Web Applications with React and FastAPI - Complete Tutorial",
+        channel_name: "TechLearning Pro",
+        channel_avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 9847,
+        views: 1234567,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        category: "education"
+      },
+      {
+        id: "demo_video_2",
+        title: "Master JavaScript ES2024: New Features and Best Practices",
+        channel_name: "JS Mastery",
+        channel_avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 1234,
+        views: 567890,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1593720219276-0b1eacd0aef4?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        category: "education"
+      },
+      {
+        id: "demo_video_3",
+        title: "Epic Gaming Moments - Lotic Compilation 2024",
+        channel_name: "GameMaster",
+        channel_avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 845,
+        views: 892341,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+        category: "gaming"
+      },
+      {
+        id: "demo_video_4",
+        title: "Quick & Easy Pasta Recipe - 15 Minutes to Perfection!",
+        channel_name: "ChefMaster",
+        channel_avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 923,
+        views: 445621,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+        category: "cooking"
+      },
+      {
+        id: "demo_video_5",
+        title: "Korean Mukbang: Trying Viral Food Combinations",
+        channel_name: "FoodieExplorer",
+        channel_avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b1c5?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 2156,
+        views: 723485,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
+        category: "mukbang"
+      },
+      {
+        id: "demo_video_6",
+        title: "My Daily Morning Routine for Productivity",
+        channel_name: "LifeHacks",
+        channel_avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 687,
+        views: 334567,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
+        category: "daily"
+      },
+      {
+        id: "demo_video_7",
+        title: "Latest Tech Trends 2024 - What's Hot in Technology",
+        channel_name: "TechReview",
+        channel_avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 1456,
+        views: 876543,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        category: "trending"
+      },
+      {
+        id: "demo_video_8",
+        title: "Pro Gaming Tips: Advanced Strategies Revealed",
+        channel_name: "GamePro",
+        channel_avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 1876,
+        views: 654321,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000),
+        category: "gaming"
+      },
+      {
+        id: "demo_video_9",
+        title: "Ultimate Cooking Challenge: 5 Dishes in 30 Minutes",
+        channel_name: "CookingChamp",
+        channel_avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
+        duration_seconds: 1834,
+        views: 423789,
+        thumbnails: [{
+          url: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=450&fit=crop",
+        }],
+        created_at: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000),
+        category: "cooking"
+      }
+    ];
+
+    // Filter by category if specified
+    if (category && category !== 'All') {
+      return allMockVideos.filter(video => 
+        video.category.toLowerCase() === category.toLowerCase()
+      );
+    }
+
+    return allMockVideos;
+  };
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);

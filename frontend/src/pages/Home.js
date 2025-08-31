@@ -318,19 +318,6 @@ const Home = () => {
               </div>
             )}
 
-            {/* Call to Action Section */}
-            <div className="mt-12 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 text-center border border-purple-100">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Ready to Share Your Story?</h2>
-              <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                Join thousands of creators who are sharing their passion and connecting with audiences worldwide.
-              </p>
-              <Button 
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-full px-8 py-3 font-semibold"
-                onClick={() => window.open('/upload', '_blank')}
-              >
-                Start Creating
-              </Button>
-            </div>
           </>
         )}
       </div>

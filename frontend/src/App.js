@@ -17,32 +17,8 @@ import './App.css';
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth < 1024;
-      setIsMobile(mobile);
-      if (mobile) {
-        setSidebarOpen(false);
-      }
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const handleMenuClick = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   const handleSearch = (query) => {
     setSearchQuery(query);
-  };
-
-  const handleOverlayClick = () => {
-    if (isMobile && sidebarOpen) {
-      setSidebarOpen(false);
-    }
   };
 
   return (

@@ -63,7 +63,7 @@ const Header = ({ onToggleSidebar, sidebarOpen }) => {
               <Video className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent hidden sm:block">
-              SAYPEX
+              Lotic
             </span>
           </Link>
         </div>

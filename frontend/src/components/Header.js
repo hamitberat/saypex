@@ -42,23 +42,8 @@ const Header = ({ sidebarOpen }) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-purple-100 shadow-sm">
       <div className="flex items-center justify-between px-4 py-3">
-        {/* Left Section - Logo and Menu */}
-        <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onToggleSidebar}
-            className={`p-2 rounded-lg transition-all duration-200 ${
-              sidebarOpen 
-                ? 'bg-purple-100 hover:bg-purple-150 text-purple-800' 
-                : 'hover:bg-purple-50 text-purple-700'
-            }`}
-          >
-            <Menu className={`w-6 h-6 transition-transform duration-200 ${
-              sidebarOpen ? 'rotate-90' : 'rotate-0'
-            }`} />
-          </Button>
-          
+        {/* Left Section - Logo Only */}
+        <div className="flex items-center">
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
               <Video className="w-6 h-6 text-white" />

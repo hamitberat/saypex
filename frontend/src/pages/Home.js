@@ -294,36 +294,6 @@ const Home = () => {
           </div>
         ) : (
           <>
-            {/* Hero Section */}
-            <div className="mb-8">
-              <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-blue-800 rounded-2xl p-8 text-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="relative z-10">
-                  <h1 className="text-4xl font-bold mb-4">Welcome to Lotic</h1>
-                  <p className="text-lg text-purple-100 mb-6 max-w-2xl">
-                    Discover amazing videos from creators around the world. Share your stories, connect with others, and explore endless entertainment.
-                  </p>
-                  <div className="flex space-x-4">
-                    <Button 
-                      className="bg-white text-purple-700 hover:bg-purple-50 font-semibold px-6 py-2 rounded-full"
-                      onClick={() => handleCategoryClick('Trending')}
-                    >
-                      Explore Trending
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="border-white text-white hover:bg-white/10 px-6 py-2 rounded-full"
-                      onClick={() => window.open('/upload', '_blank')}
-                    >
-                      Upload Video
-                    </Button>
-                  </div>
-                </div>
-                <div className="absolute -right-20 -top-20 w-40 h-40 bg-white/10 rounded-full"></div>
-                <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-blue-400/20 rounded-full"></div>
-              </div>
-            </div>
-
             {/* 3x3 Video Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {videos.slice(0, 9).map((video) => (

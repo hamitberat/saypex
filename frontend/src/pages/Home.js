@@ -106,13 +106,7 @@ const Home = () => {
   }
 
   return (
-    <div className={`pt-14 transition-all duration-300 ${
-      isMobile 
-        ? '' // No left margin on mobile (sidebar slides over content)
-        : sidebarOpen 
-          ? 'ml-60' 
-          : 'ml-16'
-    }`}>
+    <div className="pt-14 ml-16 transition-all duration-300">
       {/* Category Filter */}
       <div className="sticky top-14 bg-white/95 backdrop-blur-sm border-b border-purple-100 z-30">
         <div className="flex items-center space-x-3 p-4 overflow-x-auto scrollbar-hide">

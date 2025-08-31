@@ -50,7 +50,7 @@ function App() {
                   <Route path="/search" element={<SearchResults />} />
                   <Route path="/trending" element={<Trending />} />
                   <Route path="/explore" element={<Home />} />
-                  <Route path="/shorts" element={<Home />} />
+                  <Route path="/shorts" element={<Shorts />} />
                   <Route path="/subscriptions" element={<Home />} />
                   <Route path="/history" element={<Home />} />
                   <Route path="/liked" element={<Home />} />

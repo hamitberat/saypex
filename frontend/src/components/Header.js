@@ -129,7 +129,7 @@ const Header = ({ sidebarOpen }) => {
               </Button>
 
               {/* Profile Dropdown */}
-              <div className="relative">
+              <div className="relative profile-dropdown">
                 <Button
                   variant="ghost"
                   size="sm"

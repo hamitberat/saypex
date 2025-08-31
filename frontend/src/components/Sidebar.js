@@ -207,7 +207,7 @@ const Sidebar = ({ isOpen, isMobile }) => {
                   <a href="#" className="hover:text-purple-600 transition-colors">Developers</a> • <a href="#" className="hover:text-purple-600 transition-colors">Terms</a> • <a href="#" className="hover:text-purple-600 transition-colors">Privacy</a>
                 </div>
                 <div className="text-purple-400 mt-4 font-medium">
-                  © 2025 SAYPEX
+                  © 2025 Lotic
                 </div>
               </div>
             </div>

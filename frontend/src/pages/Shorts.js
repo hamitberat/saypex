@@ -158,14 +158,14 @@ const Shorts = () => {
 
           {/* Bottom Right - Action Buttons */}
           <div className="absolute bottom-4 right-4 flex flex-col items-center space-y-4">
-            {/* Like Button */}
+            {/* Like Button with Heart Emoji */}
             <div className="flex flex-col items-center">
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 text-white p-0"
+                className="w-12 h-12 rounded-full bg-white/20 hover:bg-red-100/30 text-white p-0"
               >
-                <Heart className="w-6 h-6" />
+                <span className="text-2xl">❤️</span>
               </Button>
               <span className="text-xs text-white mt-1">{formatCount(current.likes)}</span>
             </div>
@@ -182,18 +182,37 @@ const Shorts = () => {
               <span className="text-xs text-white mt-1">{formatCount(current.comments)}</span>
             </div>
 
-            {/* Preview Button (if available) */}
+            {/* Preview Button with Statistics */}
             {current.hasPreview && (
               <div className="flex flex-col items-center">
                 <Button
                   onClick={() => handlePreviewClick(current)}
                   variant="ghost"
                   size="sm"
-                  className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-700 text-white p-0"
+                  className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-700 text-white p-0 relative group"
                 >
                   <Play className="w-6 h-6" />
+                  
+                  {/* Statistics Tooltip */}
+                  {current.previewStats && (
+                    <div className="absolute right-14 top-1/2 transform -translate-y-1/2 bg-black/90 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                      <div className="text-center">
+                        <div className="font-semibold text-purple-300">Preview Stats</div>
+                        <div className="mt-1">👆 {formatCount(current.previewStats.totalTaps)} taps</div>
+                        <div>📺 {formatCount(current.previewStats.swipeToWatch + current.previewStats.tapToWatch)} watched</div>
+                        <div className="text-green-300">📊 {current.previewStats.conversionRate}% rate</div>
+                      </div>
+                      {/* Arrow */}
+                      <div className="absolute top-1/2 transform -translate-y-1/2 -right-1 w-2 h-2 bg-black/90 rotate-45"></div>
+                    </div>
+                  )}
                 </Button>
                 <span className="text-xs text-white mt-1">Preview</span>
+                {current.previewStats && (
+                  <span className="text-xs text-purple-300 mt-1">
+                    {formatCount(current.previewStats.totalTaps)}
+                  </span>
+                )}
               </div>
             )}
 

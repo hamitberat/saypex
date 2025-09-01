@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { ThumbsUp, ThumbsDown, Share, Download, MoreHorizontal, Bell, Play, Settings, Volume2 } from 'lucide-react';
+import { Share, Download, MoreHorizontal, Bell, Play, Settings, Volume2 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Separator } from '../components/ui/separator';
 import VideoCard from '../components/VideoCard';

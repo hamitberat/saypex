@@ -509,8 +509,8 @@ const Watch = () => {
                     </div>
                     <p className="text-sm text-gray-700 mt-1 leading-relaxed">{comment.content}</p>
                     <div className="flex items-center space-x-4 mt-2">
-                      <button className="flex items-center space-x-1 text-xs text-gray-500 hover:text-purple-600 transition-colors">
-                        <ThumbsUp className="w-3 h-3" />
+                      <button className="flex items-center space-x-1 text-xs text-gray-500 hover:text-red-600 transition-colors">
+                        <span className="text-sm">❤️</span>
                         <span>{comment.likes}</span>
                       </button>
                       <button className="text-xs text-gray-500 hover:text-purple-600 transition-colors">

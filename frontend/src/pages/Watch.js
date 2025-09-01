@@ -361,11 +361,11 @@ const Watch = () => {
                     variant="ghost"
                     size="sm"
                     onClick={handleLike}
-                    className={`rounded-l-full px-4 py-2 hover:bg-purple-100 transition-colors ${
-                      isLiked ? 'bg-purple-100 text-purple-600' : ''
+                    className={`rounded-l-full px-4 py-2 hover:bg-red-100 transition-colors ${
+                      isLiked ? 'bg-red-100 text-red-600' : ''
                     }`}
                   >
-                    <ThumbsUp className={`w-4 h-4 mr-2 ${isLiked ? 'fill-current' : ''}`} />
+                    <span className={`text-lg mr-2`}>❤️</span>
                     {formatNumber(video.metrics?.likes || 0)}
                   </Button>
                   <Separator orientation="vertical" className="h-6" />
@@ -373,11 +373,11 @@ const Watch = () => {
                     variant="ghost"
                     size="sm"
                     onClick={handleDislike}
-                    className={`rounded-r-full px-4 py-2 hover:bg-red-100 transition-colors ${
-                      isDisliked ? 'bg-red-100 text-red-600' : ''
+                    className={`rounded-r-full px-4 py-2 hover:bg-gray-200 transition-colors ${
+                      isDisliked ? 'bg-gray-200 text-gray-700' : ''
                     }`}
                   >
-                    <ThumbsDown className={`w-4 h-4 ${isDisliked ? 'fill-current' : ''}`} />
+                    <span className="text-lg">💔</span>
                   </Button>
                 </div>
 

@@ -68,6 +68,17 @@ const Shorts = () => {
 
   const handlePreviewClick = (short) => {
     if (short.hasPreview && short.previewVideoId) {
+      // Simulate tracking preview button clicks
+      console.log(`Preview clicked for ${short.title}`);
+      console.log(`Previous stats: ${short.previewStats?.totalTaps || 0} total taps`);
+      
+      // In a real app, you would send this data to your analytics service
+      // analytics.track('preview_button_clicked', {
+      //   shortId: short.id,
+      //   videoId: short.previewVideoId,
+      //   method: 'tap' // could be 'tap' or 'swipe'
+      // });
+      
       navigate(`/watch?v=${short.previewVideoId}`);
     }
   };

@@ -8,7 +8,7 @@ const Shorts = () => {
   const [shorts, setShorts] = useState([]);
   const [currentShort, setCurrentShort] = useState(0);
 
-  // Mock shorts data
+  // Mock shorts data with preview statistics
   const mockShorts = [
     {
       id: 'short1',
@@ -21,7 +21,13 @@ const Shorts = () => {
       likes: 1250,
       comments: 89,
       hasPreview: true,
-      previewVideoId: 'full_video_123'
+      previewVideoId: 'demo_video_4',
+      previewStats: {
+        totalTaps: 2876,
+        swipeToWatch: 1934,
+        tapToWatch: 942,
+        conversionRate: 68.2
+      }
     },
     {
       id: 'short2', 
@@ -46,7 +52,13 @@ const Shorts = () => {
       likes: 3450,
       comments: 234,
       hasPreview: true,
-      previewVideoId: 'full_video_456'
+      previewVideoId: 'demo_video_6',
+      previewStats: {
+        totalTaps: 4567,
+        swipeToWatch: 2890,
+        tapToWatch: 1677,
+        conversionRate: 74.8
+      }
     }
   ];
 

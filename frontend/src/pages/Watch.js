@@ -36,7 +36,7 @@ const Watch = () => {
     metrics: {
       views: 1234567,
       likes: 45678,
-      dislikes: 892,
+      dislikes: 1247,
       comments: 1245
     },
     subscribers: 856000,

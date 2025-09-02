@@ -58,7 +58,7 @@ const Header = ({ sidebarOpen }) => {
         <div className="flex items-center">
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
             <img 
-              src="/lotic-logo.svg" 
+              src="/lotic-logo.png" 
               alt="Lotic" 
               className="w-10 h-10 shadow-md rounded-lg"
             />

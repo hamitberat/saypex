@@ -19,6 +19,7 @@ const Shorts = () => {
       channelName: 'ChefMaster',
       channelAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face',
       likes: 1250,
+      dislikes: 47,
       comments: 89,
       hasPreview: true,
       previewVideoId: 'demo_video_4',

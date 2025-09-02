@@ -52,6 +52,7 @@ const Shorts = () => {
       channelName: 'MotivateDaily',
       channelAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b1c5?w=40&h=40&fit=crop&crop=face',
       likes: 3450,
+      dislikes: 123,
       comments: 234,
       hasPreview: true,
       previewVideoId: 'demo_video_6',

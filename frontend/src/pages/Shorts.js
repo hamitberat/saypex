@@ -39,6 +39,7 @@ const Shorts = () => {
       channelName: 'GamePro',
       channelAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face',
       likes: 2340,
+      dislikes: 78,
       comments: 156,
       hasPreview: false
     },

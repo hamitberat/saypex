@@ -173,6 +173,18 @@ const Shorts = () => {
               <span className="text-xs text-white mt-1">{formatCount(current.likes)}</span>
             </div>
 
+            {/* Dislike Button with Broken Heart Emoji */}
+            <div className="flex flex-col items-center">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 text-white p-0"
+              >
+                <span className="text-2xl">💔</span>
+              </Button>
+              <span className="text-xs text-white mt-1">{formatCount(current.dislikes)}</span>
+            </div>
+
             {/* Comment Button */}
             <div className="flex flex-col items-center">
               <Button

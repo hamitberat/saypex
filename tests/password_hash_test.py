@@ -7,7 +7,7 @@ import requests
 import json
 import sys
 
-BACKEND_URL = "https://clean-dependencies-1.preview.emergentagent.com/api"
+BACKEND_URL = "https://vidflow-15.preview.emergentagent.com/api"
 
 def test_password_hashing():
     """Test that passwords are properly hashed and not stored in plain text"""

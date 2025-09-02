@@ -57,10 +57,10 @@ const Header = ({ sidebarOpen }) => {
         {/* Left Section - Logo Only */}
         <div className="flex items-center">
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-blue-500 rounded-xl flex items-center justify-center">
-              <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[6px] border-y-transparent ml-1"></div>
+            <div className="w-10 h-10 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-0 h-0 border-l-[8px] border-l-white border-y-[5px] border-y-transparent ml-0.5"></div>
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent hidden sm:block">
+            <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-600 bg-clip-text text-transparent hidden sm:block">
               Lotic
             </span>
           </Link>

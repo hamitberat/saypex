@@ -18,6 +18,9 @@ const Watch = () => {
   const [recommendedVideos, setRecommendedVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportReasons, setReportReasons] = useState([]);
   const currentUser = authHelpers.getCurrentUser();
 
   // Mock video data for demonstration

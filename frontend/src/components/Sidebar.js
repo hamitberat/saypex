@@ -82,8 +82,8 @@ const Sidebar = ({ isOpen, isMobile }) => {
               variant="ghost"
               className={`w-full justify-center px-3 py-2 mb-1 h-12 transition-all duration-200 ${
                 isActive(item.path) 
-                  ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 font-medium border-r-2 border-purple-500' 
-                  : 'hover:bg-purple-50 text-gray-700'
+                  ? 'bg-gradient-to-r from-pink-100 to-blue-100 text-pink-700 font-medium border-r-2 border-pink-500' 
+                  : 'hover:bg-pink-50 text-gray-700'
               }`}
               onClick={() => handleNavigation(item.path)}
               title={item.label}

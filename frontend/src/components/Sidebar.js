@@ -88,7 +88,7 @@ const Sidebar = ({ isOpen, isMobile }) => {
               onClick={() => handleNavigation(item.path)}
               title={item.label}
             >
-              <item.icon className={`w-6 h-6 flex-shrink-0 ${isActive(item.path) ? 'text-purple-600' : ''}`} />
+              <item.icon className={`w-6 h-6 flex-shrink-0 ${isActive(item.path) ? 'text-pink-600' : ''}`} />
             </Button>
           ))}
         </div>

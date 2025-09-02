@@ -189,15 +189,21 @@ const Shorts = () => {
                   onClick={() => handlePreviewClick(current)}
                   variant="ghost"
                   size="sm"
-                  className="w-12 h-12 rounded-full bg-transparent hover:bg-white/10 text-white p-0 relative group border-2 border-white/30 hover:border-white/50 transition-all"
+                  className="w-12 h-12 rounded-full bg-transparent hover:bg-white/10 text-white p-0 relative group transition-all"
                 >
-                  {/* Custom Preview Icon - Double Arrow/Forward Symbol */}
+                  {/* Your Exact Preview Icon Design */}
                   <div className="flex items-center justify-center">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-white">
-                      {/* First triangle/arrow */}
-                      <path d="M8 5L15 12L8 19V5Z" fill="currentColor" />
-                      {/* Second triangle/arrow slightly offset */}
-                      <path d="M13 5L20 12L13 19V5Z" fill="currentColor" />
+                    <svg width="32" height="20" viewBox="0 0 32 20" fill="none" className="text-white">
+                      {/* First play button (rounded square) */}
+                      <rect x="0" y="2" width="12" height="12" rx="2" fill="currentColor"/>
+                      <path d="M4 5L9 8L4 11V5Z" fill="white"/>
+                      
+                      {/* Arrow pointing right */}
+                      <path d="M14 8L17 10L14 12V8Z" fill="currentColor"/>
+                      
+                      {/* Second play button (rounded square) */}
+                      <rect x="20" y="0" width="16" height="16" rx="3" fill="currentColor"/>
+                      <path d="M25 4L31 8L25 12V4Z" fill="white"/>
                     </svg>
                   </div>
                   

@@ -465,13 +465,38 @@ const Watch = () => {
                   Download
                 </Button>
 
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="bg-gray-100 hover:bg-gray-200 rounded-full p-2"
-                >
-                  <MoreHorizontal className="w-4 h-4" />
-                </Button>
+                <div className="relative more-menu-container">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleMoreMenuToggle}
+                    className="bg-gray-100 hover:bg-gray-200 rounded-full p-2"
+                  >
+                    <MoreHorizontal className="w-4 h-4" />
+                  </Button>
+
+                  {/* More Options Menu */}
+                  {showMoreMenu && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                      <div className="py-1">
+                        <button
+                          onClick={handleNotInterested}
+                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                        >
+                          <EyeOff className="w-4 h-4 mr-3" />
+                          Not interested
+                        </button>
+                        <button
+                          onClick={handleReport}
+                          className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center"
+                        >
+                          <Flag className="w-4 h-4 mr-3" />
+                          Report video
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -207,7 +207,7 @@ const Shorts = () => {
                     </div>
                   )}
                 </Button>
-                <span className="text-xs text-white mt-1">Preview</span>
+                {/* Only show the count, no "Preview" text */}
                 {current.previewStats && (
                   <span className="text-xs text-purple-300 mt-1">
                     {formatCount(current.previewStats.totalTaps)}

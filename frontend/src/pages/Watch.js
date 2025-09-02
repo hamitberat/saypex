@@ -654,6 +654,64 @@ const Watch = () => {
           </div>
         </div>
       </div>
+
+      {/* Report Modal */}
+      {showReportModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Report Video</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowReportModal(false)}
+                className="p-1 hover:bg-gray-100 rounded"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+
+            <div className="mb-4">
+              <p className="text-sm text-gray-600 mb-4">
+                Help us understand what's happening with this video. Select all that apply:
+              </p>
+
+              <div className="space-y-3 max-h-60 overflow-y-auto">
+                {reportOptions.map((option) => (
+                  <label
+                    key={option.id}
+                    className="flex items-start space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={reportReasons.includes(option.id)}
+                      onChange={() => handleReportReasonToggle(option.id)}
+                      className="mt-0.5 h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                    />
+                    <span className="text-sm text-gray-700">{option.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex space-x-3">
+              <Button
+                variant="ghost"
+                onClick={() => setShowReportModal(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleReportSubmit}
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+              >
+                Submit Report
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

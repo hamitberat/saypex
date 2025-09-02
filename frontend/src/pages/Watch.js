@@ -443,7 +443,8 @@ const Watch = () => {
                       isDisliked ? 'bg-gray-200 text-gray-700' : ''
                     }`}
                   >
-                    <span className="text-lg">💔</span>
+                    <span className="text-lg mr-2">💔</span>
+                    {formatNumber(video.metrics?.dislikes || 0)}
                   </Button>
                 </div>
 

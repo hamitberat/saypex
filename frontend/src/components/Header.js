@@ -172,7 +172,7 @@ const Header = ({ sidebarOpen }) => {
                           navigate(`/channel/${currentUser?.username}`);
                           setProfileMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-colors flex items-center"
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-pink-50 transition-colors flex items-center"
                       >
                         <User className="w-4 h-4 mr-3" />
                         Your Channel

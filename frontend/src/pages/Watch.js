@@ -163,6 +163,69 @@ const Watch = () => {
 
     loadVideoData();
   }, [videoId]);
+  // Close profile menu when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showMoreMenu && !event.target.closest('.more-menu-container')) {
+        setShowMoreMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showMoreMenu]);
+
+  const handleMoreMenuToggle = () => {
+    setShowMoreMenu(!showMoreMenu);
+  };
+
+  const handleNotInterested = () => {
+    console.log('User marked video as not interested');
+    // In a real app, you would send this to your analytics/recommendation service
+    setShowMoreMenu(false);
+    // Show success message or redirect
+    alert('Thanks for your feedback! We\'ll show you fewer videos like this.');
+  };
+
+  const handleReport = () => {
+    setShowMoreMenu(false);
+    setShowReportModal(true);
+  };
+
+  const handleReportSubmit = () => {
+    if (reportReasons.length === 0) {
+      alert('Please select at least one reason for reporting.');
+      return;
+    }
+
+    console.log('Video reported for:', reportReasons);
+    // In a real app, you would send this to your moderation service
+    alert('Thank you for your report. We\'ll review this content shortly.');
+    
+    setShowReportModal(false);
+    setReportReasons([]);
+  };
+
+  const handleReportReasonToggle = (reason) => {
+    if (reportReasons.includes(reason)) {
+      setReportReasons(reportReasons.filter(r => r !== reason));
+    } else {
+      setReportReasons([...reportReasons, reason]);
+    }
+  };
+
+  const reportOptions = [
+    { id: 'spam', label: 'Spam or misleading content' },
+    { id: 'inappropriate', label: 'Inappropriate or offensive content' },
+    { id: 'violence', label: 'Violent or graphic content' },
+    { id: 'harassment', label: 'Harassment or bullying' },
+    { id: 'copyright', label: 'Copyright infringement' },
+    { id: 'misinformation', label: 'False information or misinformation' },
+    { id: 'adult', label: 'Adult or sexual content' },
+    { id: 'dangerous', label: 'Dangerous or harmful activities' },
+    { id: 'hate', label: 'Hate speech or discrimination' },
+    { id: 'other', label: 'Other policy violation' }
+  ];
 
   const handleLike = async () => {
     if (!currentUser) {

@@ -86,7 +86,7 @@ const Header = ({ sidebarOpen }) => {
               </div>
               <Button
                 type="submit"
-                className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-r-full border-l-0 h-10"
+                className="px-6 py-2 bg-gradient-to-r from-pink-600 to-blue-600 hover:from-pink-700 hover:to-blue-700 text-white rounded-r-full border-l-0 h-10"
               >
                 <Search className="w-4 h-4" />
               </Button>

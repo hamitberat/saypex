@@ -331,7 +331,7 @@ const Watch = () => {
             <div className="text-lg text-gray-600 mb-4">{error || 'Video not found'}</div>
             <Button 
               onClick={() => navigate('/')}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-full px-6 py-2"
+              className="bg-gradient-to-r from-pink-600 to-blue-600 hover:from-pink-700 hover:to-blue-700 text-white rounded-full px-6 py-2"
             >
               Return to Home
             </Button>

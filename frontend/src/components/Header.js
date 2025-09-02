@@ -81,7 +81,7 @@ const Header = ({ sidebarOpen }) => {
                     }
                   }}
                   placeholder="Search videos, channels..."
-                  className="w-full px-4 py-2 pr-4 border border-purple-200 rounded-l-full focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-200 bg-white"
+                  className="w-full px-4 py-2 pr-4 border border-pink-200 rounded-l-full focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-200 bg-white"
                 />
               </div>
               <Button

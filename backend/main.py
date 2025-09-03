@@ -43,7 +43,7 @@ async def health_check(db: AsyncSession = Depends(get_db)):
         
         return {
             "status": "healthy",
-            "message": "Lotic API is running",
+            "message": "Oultic API is running",
             "database": "connected"
         }
     except Exception as e:

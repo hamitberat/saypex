@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Search, Upload, Bell, User, Video, ChevronDown } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Button } from './ui/button';
-import { authHelpers } from '../services/api';
+import React, { useState } from "react";
+import { Search, Upload, Bell, User, Video, ChevronDown } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { Button } from "./ui/button";
+import { authHelpers } from "../services/api";
 
 const Header = ({ sidebarOpen }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const currentUser = authHelpers.getCurrentUser();
@@ -14,27 +14,29 @@ const Header = ({ sidebarOpen }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?search_query=${encodeURIComponent(searchQuery.trim())}`);
+      navigate(
+        `/search?search_query=${encodeURIComponent(searchQuery.trim())}`
+      );
     }
   };
 
   // Close profile menu when clicking outside
   React.useEffect(() => {
     const handleClickOutside = (event) => {
-      if (profileMenuOpen && !event.target.closest('.profile-dropdown')) {
+      if (profileMenuOpen && !event.target.closest(".profile-dropdown")) {
         setProfileMenuOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [profileMenuOpen]);
 
   const handleUploadClick = () => {
     if (isAuthenticated) {
-      navigate('/upload');
+      navigate("/upload");
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   };
 
@@ -47,7 +49,7 @@ const Header = ({ sidebarOpen }) => {
 
   const handleLogout = () => {
     authHelpers.logout();
-    navigate('/');
+    navigate("/");
     window.location.reload(); // Refresh to update UI state
   };
 
@@ -56,14 +58,17 @@ const Header = ({ sidebarOpen }) => {
       <div className="flex items-center justify-between px-4 py-3">
         {/* Left Section - Logo Only */}
         <div className="flex items-center">
-          <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <img 
-              src="/lotic-logo.png" 
-              alt="Lotic" 
+          <Link
+            to="/"
+            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+          >
+            <img
+              src="/lotic-logo.png"
+              alt="Lotic"
               className="w-10 h-10 shadow-md rounded-lg"
             />
             <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-600 bg-clip-text text-transparent hidden sm:block">
-              Lotic
+              Oultic
             </span>
           </Link>
         </div>
@@ -78,7 +83,7 @@ const Header = ({ sidebarOpen }) => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       handleSearch(e);
                     }
                   }}
@@ -146,7 +151,7 @@ const Header = ({ sidebarOpen }) => {
                     <User className="w-4 h-4 text-white" />
                   </div>
                   <span className="hidden md:block text-sm font-medium text-gray-700">
-                    {currentUser?.username || 'User'}
+                    {currentUser?.username || "User"}
                   </span>
                   <ChevronDown className="w-4 h-4 text-gray-500" />
                 </Button>
@@ -162,8 +167,12 @@ const Header = ({ sidebarOpen }) => {
                             <User className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-gray-900">{currentUser?.username || 'User'}</div>
-                            <div className="text-sm text-gray-500">{currentUser?.email}</div>
+                            <div className="font-medium text-gray-900">
+                              {currentUser?.username || "User"}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {currentUser?.email}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -181,7 +190,7 @@ const Header = ({ sidebarOpen }) => {
                       </button>
                       <button
                         onClick={() => {
-                          navigate('/settings');
+                          navigate("/settings");
                           setProfileMenuOpen(false);
                         }}
                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-pink-50 transition-colors"
@@ -190,7 +199,7 @@ const Header = ({ sidebarOpen }) => {
                       </button>
                       <button
                         onClick={() => {
-                          navigate('/settings/2fa');
+                          navigate("/settings/2fa");
                           setProfileMenuOpen(false);
                         }}
                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-pink-50 transition-colors"
@@ -236,7 +245,10 @@ const Header = ({ sidebarOpen }) => {
                         🔑 Sign In
                       </button>
                     </Link>
-                    <Link to="/signup" onClick={() => setProfileMenuOpen(false)}>
+                    <Link
+                      to="/signup"
+                      onClick={() => setProfileMenuOpen(false)}
+                    >
                       <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-pink-50 transition-colors">
                         ✨ Sign Up
                       </button>

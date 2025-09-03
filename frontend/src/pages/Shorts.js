@@ -404,23 +404,6 @@ const Shorts = () => {
               </Button>
             </div>
           </div>
-
-          {/* Navigation indicators */}
-          {shorts.length > 1 && (
-            <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-              <div className="flex flex-col space-y-2">
-                {shorts.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentShort(index)}
-                    className={`w-2 h-8 rounded-full transition-colors ${
-                      index === currentShort ? 'bg-white' : 'bg-white/40'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

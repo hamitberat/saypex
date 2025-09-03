@@ -268,9 +268,6 @@ const Shorts = () => {
               <Play className="w-16 h-16 mx-auto mb-4 opacity-70" />
               <p className="text-lg font-medium">{current.title}</p>
               <p className="text-sm opacity-70 mt-2">Video would play here</p>
-              <div className="mt-4 text-xs opacity-50">
-                Video {currentShort + 1} of {shorts.length}
-              </div>
             </div>
           </div>
 

@@ -7,6 +7,10 @@ const Shorts = () => {
   const navigate = useNavigate();
   const [shorts, setShorts] = useState([]);
   const [currentShort, setCurrentShort] = useState(0);
+  const containerRef = useRef(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [startX, setStartX] = useState(0);
 
   // Mock shorts data with preview statistics
   const mockShorts = [

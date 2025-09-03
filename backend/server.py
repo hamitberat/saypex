@@ -66,8 +66,8 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI app with lifespan management
 app = FastAPI(
-    title="YouTube Clone API",
-    description="Enterprise-grade YouTube clone with ML recommendations",
+    title="Oultic Video Platform API",
+    description="Enterprise-grade video platform with ML recommendations and social features",
     version="1.0.0",
     lifespan=lifespan
 )

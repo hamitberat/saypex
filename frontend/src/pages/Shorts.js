@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Heart, MessageCircle, Share, Play, User } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,10 @@ const Shorts = () => {
   const navigate = useNavigate();
   const [shorts, setShorts] = useState([]);
   const [currentShort, setCurrentShort] = useState(0);
+  const containerRef = useRef(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [startX, setStartX] = useState(0);
 
   // Mock shorts data with preview statistics
   const mockShorts = [
@@ -69,6 +73,142 @@ const Shorts = () => {
     setShorts(mockShorts);
   }, []);
 
+  // Swipe/scroll functionality
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let isDragging = false;
+    let startY = 0;
+    let startX = 0;
+    let scrollTimeout = null;
+
+    // Mouse events
+    const handleMouseDown = (e) => {
+      isDragging = true;
+      startY = e.clientY;
+      startX = e.clientX;
+      setIsScrolling(true);
+      container.style.cursor = 'grabbing';
+    };
+
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+    };
+
+    const handleMouseUp = (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      container.style.cursor = 'grab';
+
+      const deltaY = e.clientY - startY;
+      const deltaX = Math.abs(e.clientX - startX);
+      
+      // Only trigger if it's mainly a vertical swipe (not horizontal)
+      if (deltaX < 50 && Math.abs(deltaY) > 50) {
+        if (deltaY > 0 && currentShort > 0) {
+          // Swipe down - go to previous video
+          setCurrentShort(prev => prev - 1);
+        } else if (deltaY < 0 && currentShort < shorts.length - 1) {
+          // Swipe up - go to next video
+          setCurrentShort(prev => prev + 1);
+        }
+      }
+      
+      setTimeout(() => setIsScrolling(false), 300);
+    };
+
+    // Touch events for mobile
+    const handleTouchStart = (e) => {
+      const touch = e.touches[0];
+      startY = touch.clientY;
+      startX = touch.clientX;
+      setIsScrolling(true);
+    };
+
+    const handleTouchEnd = (e) => {
+      const touch = e.changedTouches[0];
+      const deltaY = touch.clientY - startY;
+      const deltaX = Math.abs(touch.clientX - startX);
+      
+      // Only trigger if it's mainly a vertical swipe
+      if (deltaX < 50 && Math.abs(deltaY) > 50) {
+        if (deltaY > 0 && currentShort > 0) {
+          // Swipe down - go to previous video
+          setCurrentShort(prev => prev - 1);
+        } else if (deltaY < 0 && currentShort < shorts.length - 1) {
+          // Swipe up - go to next video
+          setCurrentShort(prev => prev + 1);
+        }
+      }
+      
+      setTimeout(() => setIsScrolling(false), 300);
+    };
+
+    // Wheel events for trackpad/mouse wheel
+    const handleWheel = (e) => {
+      e.preventDefault();
+      
+      // Clear existing timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      
+      setIsScrolling(true);
+      
+      // Set timeout to batch wheel events
+      scrollTimeout = setTimeout(() => {
+        if (e.deltaY > 0 && currentShort < shorts.length - 1) {
+          // Scroll down - go to next video
+          setCurrentShort(prev => prev + 1);
+        } else if (e.deltaY < 0 && currentShort > 0) {
+          // Scroll up - go to previous video
+          setCurrentShort(prev => prev - 1);
+        }
+        setIsScrolling(false);
+      }, 100);
+    };
+
+    // Keyboard events
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowUp' && currentShort > 0) {
+        setCurrentShort(prev => prev - 1);
+      } else if (e.key === 'ArrowDown' && currentShort < shorts.length - 1) {
+        setCurrentShort(prev => prev + 1);
+      }
+    };
+
+    // Add event listeners
+    container.addEventListener('mousedown', handleMouseDown);
+    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mouseup', handleMouseUp);
+    container.addEventListener('mouseleave', handleMouseUp); // Handle mouse leaving container
+    container.addEventListener('touchstart', handleTouchStart);
+    container.addEventListener('touchend', handleTouchEnd);
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Set initial cursor
+    container.style.cursor = 'grab';
+
+    // Cleanup
+    return () => {
+      container.removeEventListener('mousedown', handleMouseDown);
+      container.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mouseup', handleMouseUp);
+      container.removeEventListener('mouseleave', handleMouseUp);
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('keydown', handleKeyDown);
+      
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    };
+  }, [currentShort, shorts.length]);
+
   const handlePreviewClick = (short) => {
     if (short.hasPreview && short.previewVideoId) {
       // Simulate tracking preview button clicks
@@ -114,7 +254,12 @@ const Shorts = () => {
   return (
     <div className="pt-14 ml-16 min-h-screen bg-black flex items-center justify-center">
       {/* Shorts Container */}
-      <div className="relative w-full max-w-md h-[calc(100vh-56px)] bg-black overflow-hidden">
+      <div 
+        ref={containerRef}
+        className={`relative w-full max-w-md h-[calc(100vh-56px)] bg-black overflow-hidden select-none transition-opacity ${
+          isScrolling ? 'opacity-80' : 'opacity-100'
+        }`}
+      >
         {/* Video Container */}
         <div className="relative w-full h-full flex items-center justify-center">
           {/* Placeholder for video */}
@@ -256,23 +401,6 @@ const Shorts = () => {
               </Button>
             </div>
           </div>
-
-          {/* Navigation indicators */}
-          {shorts.length > 1 && (
-            <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-              <div className="flex flex-col space-y-2">
-                {shorts.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentShort(index)}
-                    className={`w-2 h-8 rounded-full transition-colors ${
-                      index === currentShort ? 'bg-white' : 'bg-white/40'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

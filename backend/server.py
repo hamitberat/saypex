@@ -89,7 +89,7 @@ app.add_middleware(
 async def root():
     """Health check endpoint"""
     return {
-        "message": "YouTube Clone API is running",
+        "message": "Oultic Video Platform API is running",
         "status": "healthy",
         "version": "1.0.0"
     }

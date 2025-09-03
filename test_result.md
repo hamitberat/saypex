@@ -394,7 +394,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Lotic Transformation Verification"
+    - "Oultic Rebranding Backend Implementation"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"

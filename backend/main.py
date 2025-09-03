@@ -12,7 +12,7 @@ from api.users import router as users_router
 from api.videos import router as videos_router
 
 app = FastAPI(
-    title="Lotic Video Platform API",
+    title="Oultic Video Platform API",
     description="A modern video platform backend built with FastAPI and PostgreSQL",
     version="1.0.0",
     docs_url="/api/docs" if os.getenv("ENVIRONMENT") != "production" else None,
@@ -43,7 +43,7 @@ async def health_check(db: AsyncSession = Depends(get_db)):
         
         return {
             "status": "healthy",
-            "message": "Lotic API is running",
+            "message": "Oultic API is running",
             "database": "connected"
         }
     except Exception as e:

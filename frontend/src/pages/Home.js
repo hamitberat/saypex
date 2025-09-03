@@ -104,7 +104,7 @@ const Home = () => {
       },
       {
         id: "demo_video_3",
-        title: "Epic Gaming Moments - Lotic Compilation 2024",
+        title: "Epic Gaming Moments - Oultic Compilation 2024",
         channel_name: "GameMaster",
         channel_avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=40&h=40&fit=crop&crop=face",
         duration_seconds: 845,

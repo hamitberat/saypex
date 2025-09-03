@@ -68,7 +68,7 @@ const Header = ({ sidebarOpen }) => {
               className="w-10 h-10 shadow-md rounded-lg"
             />
             <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-600 bg-clip-text text-transparent hidden sm:block">
-              Oultic
+              Oultic Oultic
             </span>
           </Link>
         </div>

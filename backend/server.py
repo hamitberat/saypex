@@ -66,8 +66,8 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI app with lifespan management
 app = FastAPI(
-    title="YouTube Clone API",
-    description="Enterprise-grade YouTube clone with ML recommendations",
+    title="Oultic Video Platform API",
+    description="Enterprise-grade video platform with ML recommendations and social features",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -89,7 +89,7 @@ app.add_middleware(
 async def root():
     """Health check endpoint"""
     return {
-        "message": "YouTube Clone API is running",
+        "message": "Oultic Video Platform API is running",
         "status": "healthy",
         "version": "1.0.0"
     }
@@ -99,7 +99,7 @@ async def health_check():
     """Detailed health check endpoint"""
     return {
         "status": "healthy",
-        "service": "youtube-clone-api",
+        "service": "oultic-video-platform-api",
         "version": "1.0.0",
         "environment": os.environ.get("ENVIRONMENT", "development")
     }

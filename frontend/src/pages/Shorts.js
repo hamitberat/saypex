@@ -254,7 +254,12 @@ const Shorts = () => {
   return (
     <div className="pt-14 ml-16 min-h-screen bg-black flex items-center justify-center">
       {/* Shorts Container */}
-      <div className="relative w-full max-w-md h-[calc(100vh-56px)] bg-black overflow-hidden">
+      <div 
+        ref={containerRef}
+        className={`relative w-full max-w-md h-[calc(100vh-56px)] bg-black overflow-hidden select-none transition-opacity ${
+          isScrolling ? 'opacity-80' : 'opacity-100'
+        }`}
+      >
         {/* Video Container */}
         <div className="relative w-full h-full flex items-center justify-center">
           {/* Placeholder for video */}
@@ -263,6 +268,9 @@ const Shorts = () => {
               <Play className="w-16 h-16 mx-auto mb-4 opacity-70" />
               <p className="text-lg font-medium">{current.title}</p>
               <p className="text-sm opacity-70 mt-2">Video would play here</p>
+              <div className="mt-4 text-xs opacity-50">
+                Video {currentShort + 1} of {shorts.length}
+              </div>
             </div>
           </div>
 

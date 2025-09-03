@@ -59,11 +59,11 @@ const Header = ({ sidebarOpen }) => {
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
             <img 
               src="/lotic-logo.png" 
-              alt="Lotic" 
+              alt="Oultic" 
               className="w-10 h-10 shadow-md rounded-lg"
             />
             <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-600 bg-clip-text text-transparent hidden sm:block">
-              Lotic
+              Oultic
             </span>
           </Link>
         </div>

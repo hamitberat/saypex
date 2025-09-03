@@ -99,7 +99,7 @@ async def health_check():
     """Detailed health check endpoint"""
     return {
         "status": "healthy",
-        "service": "youtube-clone-api",
+        "service": "oultic-video-platform-api",
         "version": "1.0.0",
         "environment": os.environ.get("ENVIRONMENT", "development")
     }
